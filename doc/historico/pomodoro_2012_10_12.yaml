@@ -1,0 +1,10 @@
+
+SESSION 1,2,3,4,5,6,7,8,9,10,11,12:
+	CHANGED: Cadastro de Clientes - Fluxo cadastro Completo		
+	CHANGED: Cadastro de Clientes - observações
+	MOVED: Cadastro de Clientes - Exibir empresas filiadas na tela principal 
+	MOVED: Cadastro de Clientes - Cliente da área x?
+	CHANGED: Cadastro de Clientes - Multiplos emails
+    MOVED: Cadastro pessoa física
+    CHANGED: Not PLaned! - Cadastro de Clientes - Nested Model - Aprender de forma mais fácil como fazer um sub formulário One-To-Many 
+    CHANGED: Layouting Show Client

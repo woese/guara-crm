@@ -1,0 +1,13 @@
+
+SESSION 1,2
+  Cadastro de Permissões Usuários
+  01:55 - Criar Spec
+     - Cadastro dos usuários para o administrator
+     -rota
+     - I18n
+  
+  SESS 2
+  02:25
+     - Link editar permissões ao Exibir usuário e ser administrador
+     - spec de edição
+     - Tela de Cadastro de permissões

@@ -1,0 +1,17 @@
+SESSION 1:
+    CAHNGED: Área administrativa
+    TODO: Organizar Menu
+    TODO: Geral [MG04] Layouting Cadastro Auxiliares
+    
+    
+    TODO: Cadastros Cidades
+    TODO: Bairros
+    TODO: Cadastro de Áreas
+
+    CHANGED: CADASTRO GERAL
+      CHANGED: Fazer templates genericos
+      CHANGED: Paginação
+      CHANGED: Aplicar regras de acesso nas interfaces
+
+    CHANGED: Scaffolding
+      CHANGED: Redefinir Templates

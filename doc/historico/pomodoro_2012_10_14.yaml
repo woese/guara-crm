@@ -1,0 +1,63 @@
+SESSION 1:
+    Cadastro de Clientes - Cliente da área x?:
+	  CHANGED: Model de área
+	  CAHNGED: Campo no model task type
+
+SESSION 2:
+	  CHANGED: Cadastro Task Type - form - com Company Business
+	
+SESSION 3:
+	  CHANGED: Model - User - com área de negócio principal
+	  CHANGED: Cadastro de Tarefas - Exibir apeans atividades da área do usuário
+
+SESSION 4:
+    Cadastro de Clientes - Cliente da área x?:
+        CHANGED: DB - Task - Interested_id
+        CHANGED: Model - Task - Negocio Fechado Atribuir para área
+
+
+
+
+
+SESSIONS:
+    TODO: Cadastro de Tarefas - Exibir Status da Task na Edição
+    TODO: Cadastro de Clientes - Exibir empresas filiadas na tela principal 
+    TODO: Cadastro pessoa física
+    TODO: Exibir Históricio de atividade por área
+
+SESSION 2:
+		TODO: Cadastro de Clientes - Dados de Cobrança (2h)
+ 		TODO: Cadastro de Clientes - Empresas Relacionadas 
+
+SESSION 3, 4:
+	TODO: Cadastro de Clientes - Search all fields
+	
+	
+TODO: Painel Inicial
+	TODO: Painel Inicial - Exibir atividades. (1h)
+
+
+TODO: Cadastro de Atividades
+	TODO: Cadastro de Atividades - Barra de navegação voltar para o cliente
+
+
+TODO: CADASTRO GERAL
+		TODO: CADASTRO GERAL - Fazer templates genericos
+		TODO: Aplicar regras de acesso nas interfaces
+
+TODO: Scaffolding
+	TODO: Redefinir Templates
+	
+
+TODO: Cadastro Usuários
+	TODO: Cadastro Usuários - Gravatar off-line formatar
+
+
+TODO: Cadastro de Permissões de Usuários
+	TODO: Cadastro de Grupos
+
+
+TODO: Cadastros Cidades
+TODO: Bairros
+TODO: Cadastro de Áreas
+

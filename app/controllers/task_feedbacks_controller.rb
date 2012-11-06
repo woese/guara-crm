@@ -1,0 +1,6 @@
+
+class FeedbacksController < ApplicationController
+  
+  
+  
+end

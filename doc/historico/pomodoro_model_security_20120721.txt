@@ -1,0 +1,6 @@
+
+SESSION 1: Busca Contatos por nome
+SESSION 2: Formating contact 
+
+SESSION 1: Regras de Acesso
+    gerar model de acesso

@@ -1,0 +1,6 @@
+
+  TODO: Grupo de acesso
+    Session 1
+  TODO: Aplicar regras de acesso nas interfaces
+  TODO: Layouting Show Customers
+  TODO: Atividades: Manutenção de atividades para os clientes (Responsáveis pelo histórico) (4h)

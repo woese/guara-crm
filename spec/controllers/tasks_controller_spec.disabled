@@ -1,0 +1,23 @@
+require 'spec_helper'
+
+include Devise::TestHelpers
+
+describe TasksController do
+  
+  def valid_attributes
+    {}
+  end
+  
+  def valid_session
+    @user = Factory(:admin)
+    sign_in @user
+    {}
+  end
+  
+  
+  it "get INDEX" do
+    get :index
+    assigns(:tasks).should eq([tasks])
+  end
+  
+end

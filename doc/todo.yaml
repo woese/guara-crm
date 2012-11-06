@@ -1,0 +1,91 @@
+
+TODO: Cadastro de Clientes
+  CHANGED: Cadastro de Clientes [MC01] Form inicial
+  CHANGED: Cadastro de Clientes [MC02] Tela de exemplo de seleção multipla ou criação
+
+  CHANGED: Cadastro de Clientes [MC03]- Validação básica do Cadastro
+	CHANGED: Cadastro de Clientes [MC04] Aceitar Registros Incompletos, marcar como tal
+	CHANGED: Cadastro de Clientes [MC05] Exibir na lista de Resultados se o registro é incompleto ou não
+
+  CHANGED: Cadastro de Clientes [MC06] Search works with a name*
+  CHANGED: Cadastro de Clientes [MC07] Editar cliente
+  CHANGED: Cadastro de Clientes [MC08] Layouting Show Customers
+  CHANGED: Cadastro de Clientes [MC09] Error: Problema params[:customer_pj]
+  
+  CHANGED: Cadastro de Clientes [MC10] Multiplos Telefone
+  CHANGED: Cadastro de Clientes [MC11] observações
+  CHANGED: Cadastro de Clientes [MC12] Exibir empresas filiadas na tela principal
+  CHANGED: Cadastro de Clientes [MC13] Cliente da área x?
+  CHANGED: Cadastro de Clientes [MC14] Search all fields
+
+  TODO: Cadastro de Clientes [MC15] Dados de Cobrança e Empresas Relacionadas (4h)
+  CHANGED: Cadastro de Clientes [MC16] Show Customer - Barra lateral com lista de contatos
+  CHANGED: Cadastro de Clientes [MC17] Show Customer - Barra lateral com lista de atividades
+  CHANGED: Cadastro de Clientes [MC01] Definir como atributo é cliente como verdadeiro - É Cliente
+  
+  CHANGED: Cadastro de Clientes [MC18] Fluxo cadastro Completo
+
+  TODO: Cadastro Clientes [MC19] pessoa física
+  CHANGED: Cadastro Clietnes [MC20] Layout Lista de Cliente
+
+  
+CHANGED: Cadastrar contatos
+  CHANGED: Cadastro Contatos [CC01] Cadastro
+  CHANGED: Cadastrar contatos [CC02] Busca por nome
+
+
+TODO: Cadastro de Atividades
+  CHANGED: Cadastro de Atividades [MT01] Manutenção - para os clientes (Responsáveis pelo histórico) (8h)
+  TODO: Cadastro de Atividades [MT02] Barra de navegação voltar para o cliente
+  TODO: Listar todas as atividades para os usuários
+
+  
+CHANGED: Regras de Acesso
+  CHANGED: Regras de Acesso [UR01] Iniciar Administrador com regras de acesso manage :all
+  CHANGED: Regras de Acesso [UR02] gerar model de acesso
+  CHANGED: Regras de Acesso [UR03] Cadastro Contatos - Layouting
+  CHANGED: Regras de Acesso [UR04] Filtro de Contatos
+  CHANGED: Regras de Acesso [UR05] Cadastro de Regras
+  CHANGED: Regras de Acesso [UR06] Grupo de acesso
+
+
+TODO: Cadastro Usuários
+  CHANGED: Cadastro Usuários [MU01] Reestruturar cadastro de usuários (após a integração com o módulo novo de segurança, o cadastros de permissão por grupo será repensado) (20h)
+  TODO: Layout
+
+
+TODO: Cadastro de Permissões de Usuários
+  CHANGED: Cadastro de Permissões [MUR01] Editar Permissões para usuário
+  TODO: Cadastro de Permissões [MUR02] Cadastro de Grupos
+  TODO: Cadastro de Permissões [MUR03] Editar Permissões dos Grupos
+  TODO: Cadastro de Permissões [MUR04] Layouting Cadastro Auxiliares
+
+
+CHANGED: Área administrativa
+CHANGED: Cadastros Cidades
+CHANGED: Bairros
+CHANGED: Cadastro de Áreas
+
+
+CHANGED: CADASTRO GERAL
+  CHANGED: Fazer templates genericos
+  CHANGED: Paginação
+  CHANGED: Aplicar regras de acesso nas interfaces
+
+  
+CHANGED: Scaffolding
+  CHANGED: Redefinir Templates
+
+
+TODO: Painel Inicial
+  TODO: Painel Inicial - Exibir Mensagens dos usuários. (2h)
+  TODO: Painel Inicial - Escrever mensagem para um usuário (2h)
+  TODO: Painel Inicial - Exibir atividades. (6h)
+
+
+TODO: GLOBAL
+  CHANGED: revisar o Enabled
+  TODO: banco de dados com Indexs
+  TODO: Alert Customer Payment peding
+  
+  

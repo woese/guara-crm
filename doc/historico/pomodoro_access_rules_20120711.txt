@@ -1,0 +1,29 @@
+
+Session 1
+  Search GEM
+  Git reconfiguration
+
+Session 2
+  Configuring GIT
+  Install GEM
+
+SESSION 3,4,5
+  Install Divise
+    https://github.com/plataformatec/devise
+
+SESSION 6,7,8
+  Configure Divise
+  
+SESSION 9, 10
+  e-mail
+  Configure cancan (load_and_authorize)
+  Sample Rules
+  
+SESSION 10
+  Cancan problem params[customer_pj]
+
+SESSION 11
+  Configure will_paginate
+
+SESSION 12
+  Filtro de Contatos

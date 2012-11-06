@@ -1,0 +1,64 @@
+
+SESSION 1 - 
+  11:00
+    rspec - Salvar permissões
+  Cadastro de Permissões Usuários
+
+  18:00 - FIM, todos os testes passando
+
+
+SESSION 2
+  09/09/12 10:00
+    Revisão Model e BD para adicionar o tasks_activity
+  11:00
+    refactor users_group > user_group and user_group > users_has_groups
+    refactor history para task
+  13:30
+    Fim refactor (problema com devise no micropost)
+
+  20:25
+    refactor History >> Task
+  21:05
+    Creating task_status
+	Creating task_resolution
+  
+  23:30
+    spec task
+
+  11/09/12 03:40
+  16/09/12 16:15
+    Histórico de Atividades dos Clientes
+      - Spec adicionar um tarefa
+  22/09/12
+    16:00
+      continua Spec add Task 
+        1 (duvida com o calendário, com able? para o botão criar)
+        2 (specs fechando como testar um calendar)
+    
+  TODO: Atividades: Manutenção de atividades para os clientes (Responsáveis pelo histórico) (4h)
+  
+SESSION 3, 4
+  Apresentação do Histórico de Atividades
+
+SESSION 5
+  Cadastro Tipo de Cliente - Jurídica ou Física
+
+SESSION 5
+  Cadastros auxiliares: Cidades, Bairros (2h)
+
+SESSION 6
+TODO: Layouting Cadastro Auxiliares
+
+SESSION 7
+  TODO: Cadastro de Cliente (Complemento): Dados de Cobrança e Empresas Relacionadas (4h)
+
+
+SESSION 10, 11, 12
+TODO: Painel Inicial:
+  TODO: Exibir Mensagens dos usuários. (2h)
+  TODO: Escrever mensagem para um usuário (2h)
+  TODO: Exibir atividades. (6h)
+
+  TODO: Reestruturar cadastro de usuários (após a integração com o módulo novo de segurança, o cadastros de permissão por grupo será repensado) (12h)
+  TODO: Cadastro de Permissões
+

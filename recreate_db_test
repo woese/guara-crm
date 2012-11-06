@@ -1,0 +1,5 @@
+#!/bin/bash
+#cd /dropbox/CMGB/app/
+#source /etc/profile
+#~/.rvm/rubies/ruby-1.9.2-p320/bin/rake -f Rakefile db:populate_test
+rake db:populate_test

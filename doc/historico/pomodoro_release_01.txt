@@ -1,0 +1,19 @@
+
+Session - 1
+
+Cadastro básico Pesron Juridica
+
+Session - 2
+
+  - Validar CNPJ
+  - Fazer não completo, marcar como não completo
+  - 
+
+
+Validações
+[...]
+
+
+Session - 6
+ 
+  - Busca por nome

@@ -1,0 +1,41 @@
+SESSION 1:
+SESSION 2:
+SESSION 3:
+    TODO: Preencher o painel de contatos com os dados
+    TODO: Formatar Painel de Contatos  
+      
+SESSION 4:
+  TODO: Atividades: Manutenção de atividades para os clientes (Responsáveis pelo histórico) (4h)
+
+
+================================================================
+[refactor]
+
+SESSION 3, 4:
+  Apresentação do Histórico de Atividades
+
+SESSION 5:
+  Cadastro Tipo de Cliente - Jurídica ou Física
+
+SESSION 5:
+  Cadastros auxiliares: Cidades, Bairros (2h)
+
+SESSION 6:
+TODO: Layouting Cadastro Auxiliares
+
+SESSION 7:
+  TODO: Cadastro de Cliente (Complemento): Dados de Cobrança e Empresas Relacionadas (4h)
+
+
+SESSION 10, 11, 12:
+  TODO: Painel Inicial:
+    TODO: Exibir Mensagens dos usuários. (2h)
+    TODO: Escrever mensagem para um usuário (2h)
+    TODO: Exibir atividades. (6h)
+
+
+[..]:
+
+  TODO: Reestruturar cadastro de usuários (após a integração com o módulo novo de segurança, o cadastros de permissão por grupo será repensado) (12h)
+  TODO: Cadastro de Permissões
+  TODO: Cadastro de Permissões para os grupos
