@@ -9,6 +9,7 @@ class Task
   
   def cgmb_make_trivial_customer_a_business_customer
     if ((interested.is_a? Customer) &&
+        (not resolution.nil?) &&
         (resolution.id == SystemTaskResolution.RESOLVED_WITH_BUSINESS.id))
       interested.is_customer = true
       interested.save!

@@ -3,8 +3,8 @@ require 'spec_helper'
 describe CustomerHasCustomers do
   
   before do
-    @customer_has_customers = CustomerHasCustomers.new from: Factory(:customer_pj),
-                                                       to:   Factory(:customer_pj)
+    @customer_has_customers = CustomerHasCustomers.new from: Factory(:customer_pj).customer,
+                                                       to:   Factory(:customer_pj).customer
     
   end
   

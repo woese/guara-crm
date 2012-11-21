@@ -87,6 +87,13 @@
 		            </div>
 		          </div>
 				  
+				  <div class="control-group">
+		            <%= label_tag :email, t("emails.email"), :class => "control-label" %>
+		            <div class="controls">
+			          <%= f.text_field :emails_email_contains %>
+		            </div>
+		          </div>
+				
 			</div>
 			<% end %>
 			<div class="span8">
