@@ -33,10 +33,12 @@ gem 'jquery-rails'
 
 gem 'activeadmin', '0.5.0'
 
+gem 'spreadsheet'
+
 
 group :development do
-	gem 'annotate', '~> 2.4.1.beta'
-	gem 'nested_scaffold'
+  gem 'annotate', '~> 2.4.1.beta'
+  gem 'nested_scaffold'
 end
 
 group :development, :test do
