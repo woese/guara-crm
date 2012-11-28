@@ -1,0 +1,12 @@
+bairros:  
+  :type: :SCHEMA
+  :from: db/external_migrate/bairros_from.yml
+  :to: db/external_migrate/bairros_to.yml
+  :transformer: SyscadBairrosTransformer
+
+#cidades:
+#  :type: :CUSTOM
+#  :from: db/external_migrate/syscad/bairros.xls
+#  :to: tmp/to.yml
+#  :transformer: MigrateGroupNamedField
+  

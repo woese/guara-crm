@@ -49,4 +49,17 @@
 			}
 		}
 	}
+	
+	
+	select {
+		width: auto;
+	}
+
+	form fieldset ol > li label {
+		font-size: 14px;
+		background-color: #F4F4F4;
+		padding-bottom: 5px;
+		border-bottom: 1px solid #E9E9E9;
+	}
 }
+

@@ -1,0 +1,5 @@
+:columns:
+  :name: string
+  :name_correct: string
+:format: :XLS
+:url: db/external_migrate/syscad/bairros.xls

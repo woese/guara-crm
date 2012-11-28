@@ -1,35 +1,9 @@
 
-require 'spec_helper'
+require File.expand_path("../../spec_helper", __FILE__)
 
 require File.expand_path("../../../active_migration/active_migration", __FILE__)
 
-def build_file_config(url)
-      # build schema from
-      tmpfile = File.open(url, 'w')
-      tmpfile << yield
-      tmpfile.close
-end
-
-def build_config_from()  
-    # build schema from
-    build_file_config Rails.root + "tmp/from.yml" do    
-      { columns: { name: "string" },
-        format: :XLS,
-        url: File.expand_path("../../asserts/sheet1.xls", __FILE__)
-      }.to_yaml
-    end
-
-end
-
-def build_config_to()
-    build_file_config Rails.root + "tmp/to.yml" do    
-      { columns:
-          { name: "string" },
-        format: :ACTIVE_RECORD,
-        url: "District"
-      }.to_yaml
-    end
-end
+require File.expand_path('../../support/active_migration_helper', __FILE__)
 
 
 describe ActiveMigration do
@@ -90,6 +64,17 @@ describe ActiveMigration do
     
       it { @result.should be_true }
     end
+    
+    describe "load source migration" do
+      before do
+        @active_migration.should_receive(:send_row_to_schema).exactly(1).and_return(false)
+        
+      end
+    
+      it { expect { @result = @active_migration.migrate! }.to raise_error("failing migration. Line: 0, Column: 1") }
+    end
+    
+    
     
   end
   

@@ -107,7 +107,6 @@ ActiveRecord::Schema.define(:version => 20121104141751) do
   create_table "customer_financials", :force => true do |t|
     t.integer  "customer_id"
     t.boolean  "billing_address_different"
-    t.integer  "billing_address_id"
     t.integer  "contact_leader_id"
     t.boolean  "payment_pending"
     t.string   "payment_pending_message",   :limit => 500
@@ -197,9 +196,12 @@ ActiveRecord::Schema.define(:version => 20121104141751) do
 
   create_table "districts", :force => true do |t|
     t.string   "name",       :limit => 30
+    t.integer  "city_id"
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
   end
+
+  add_index "districts", ["city_id"], :name => "index_districts_on_city_id"
 
   create_table "emails", :force => true do |t|
     t.integer  "customer_id"
@@ -301,7 +303,7 @@ ActiveRecord::Schema.define(:version => 20121104141751) do
   end
 
   add_index "tasks", ["assigned_id"], :name => "index_tasks_on_assigned_id"
-  add_index "tasks", ["interested_id"], :name => "index_tasks_on_interested_id"
+  add_index "tasks", ["interested_id", "interested_type"], :name => "index_tasks_on_interested_id_and_interested_type"
   add_index "tasks", ["status_id"], :name => "index_tasks_on_status_id"
   add_index "tasks", ["type_id"], :name => "index_tasks_on_type_id"
 

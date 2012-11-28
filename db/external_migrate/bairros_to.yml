@@ -1,0 +1,4 @@
+:columns:
+  :name: string
+:format: :ACTIVE_RECORD
+:url: District

@@ -3,22 +3,20 @@ require 'spork'
 require "capybara/rspec"
 
 
-require Rails.root.join('app/helpers/application_helper.rb')
-
-
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
-require File.expand_path("config/environment", Rails.root)
+require Rails.root.join("config/environment")
 require 'rspec/rails'
 require 'rspec/autorun'
+require Rails.root.join("lib/spec/support/utilities")
+
 
 Capybara.javascript_driver = :webkit
 #Capybara.default_driver = :webkit
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
-Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
-Dir[Rails.root.join("lib/**/*.rb")].each {|f| require f}
+Dir[Rails.root.join("lib/spec/support/*.rb")].each {|f| puts f.to_s; require f}
 
 def config_transactional(config)
   
