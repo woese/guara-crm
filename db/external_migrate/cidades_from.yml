@@ -1,0 +1,6 @@
+:columns:
+  :name: string
+  :name_correct: string
+  :state: string
+:format: :XLS
+:url: db/external_migrate/syscad/cidades.xls

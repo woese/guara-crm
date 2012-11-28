@@ -23,4 +23,12 @@ module ApplicationHelper
         count == 1 ? "#{noun}#{text}" : "#{noun.pluralize}#{text}"
       end
     end
+    
+    
+    def puts_on_file(file, string=nil)
+      string ||= yield
+      aFile = File.new(file, "w")
+      aFile.write(string)
+      aFile.close
+    end
 end

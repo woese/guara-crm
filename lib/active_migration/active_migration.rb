@@ -1,6 +1,7 @@
 
 require "spreadsheet"
 require 'active_support'
+require 'ruby-debug'
 
 
 module ActiveMigration
@@ -37,45 +38,49 @@ module ActiveMigration
       raise "schema_from needs" if @schema_from.nil?
       raise "schema_to needs" if @schema_to.nil?
       
-      begin_migration
+      begin_migration()
     
       # TODO: Make flexible configurable
       if @schema_from[:format].to_sym == :XLS
-        @xls = Spreadsheet.open @schema_from[:url]
-        # TODO: make others workbook accessible by configuration
-        sheet = @xls.worksheet 0
-      
-        @line = 0
-      
-        # ignore head line
-        sheet.each 1 do |row|
-          @column = 0
-          row_to = { }
-          
-          #read schema columns and types
-          @schema_from[:columns].each do |schema_column, schema_type|
-            row_to.merge!(schema_column.to_sym => row[@column])
-            @column+=1
-          end
-        
-          #transform row to @schema_to
-          res = true
-          res = @transformer.transform(row_to) if not @transformer.nil?
-          
-          if (res!=:ignore)
-            res = res==true && send_row_to_schema(row_to)
-            raise_migration if (res==false)
-          end
-          
-          @line+=1
-        end
-      
+        xls_migrate()   
       end
       
       end_migration()
       
       return true
     
+    end
+    
+    
+    def xls_migrate
+      @xls = Spreadsheet.open @schema_from[:url]
+      # TODO: make others workbook accessible by configuration
+      sheet = @xls.worksheet 0
+    
+      @line = 0
+    
+      # ignore head line
+      sheet.each 1 do |row|
+        @column = 0
+        row_to = { }
+        
+        #read schema columns and types
+        @schema_from[:columns].each do |schema_column, schema_type|
+          row_to.merge!(schema_column.to_sym => row[@column])
+          @column+=1
+        end
+      
+        #transform row to @schema_to
+        res = true
+        res = @transformer.transform(row_to) if not @transformer.nil?
+        
+        if (res!=:ignore)
+          res = res==true && send_row_to_schema(row_to)
+          raise_migration if (res==false)
+        end
+        
+        @line+=1
+      end
     end
     
     
@@ -132,7 +137,6 @@ module ActiveMigration
   # Transformation schema
   # When passing to schema
   module Transformer
-    
     ##
     # called on start of migration
     def begin(schema_from, schema_to)

@@ -1,3 +1,17 @@
+
+estados:  
+  :type: :SCHEMA
+  :from: db/external_migrate/estados_from.yml
+  :to: db/external_migrate/estados_to.yml
+  :transformer: SyscadEstadosTransformer
+
+cidades:  
+  :type: :SCHEMA
+  :from: db/external_migrate/cidades_from.yml
+  :to: db/external_migrate/cidades_to.yml
+  :transformer: SyscadCidadesTransformer
+
+
 bairros:  
   :type: :SCHEMA
   :from: db/external_migrate/bairros_from.yml

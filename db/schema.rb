@@ -66,10 +66,10 @@ ActiveRecord::Schema.define(:version => 20121104141751) do
   end
 
   create_table "cities", :force => true do |t|
-    t.string   "name"
+    t.string   "name",       :limit => 60
     t.integer  "state_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
     t.boolean  "enabled"
   end
 
@@ -195,7 +195,7 @@ ActiveRecord::Schema.define(:version => 20121104141751) do
   end
 
   create_table "districts", :force => true do |t|
-    t.string   "name",       :limit => 30
+    t.string   "name",       :limit => 60
     t.integer  "city_id"
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false

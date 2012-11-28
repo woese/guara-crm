@@ -1,7 +1,7 @@
 
 require "active_migration/transformer/grouped_field_fixed_spelling"
 
-class SyscadBairrosTransformer < ActiveMigration::Transformer::GroupedFieldFixedSpelling
+class SyscadEstadosTransformer < ActiveMigration::Transformer::GroupedFieldFixedSpelling
   
   include ActiveMigration::Transformer
   include ApplicationHelper
@@ -9,7 +9,7 @@ class SyscadBairrosTransformer < ActiveMigration::Transformer::GroupedFieldFixed
   def initialize(schema)
     super schema
     
-    @domain_name = "bairros"
+    @domain_name = "estados"
   end
   
 end
