@@ -8,7 +8,7 @@ before_install:
 before_script:
   - bundle install
   - psql -c 'create database crm_test;' -U postgres
-  - ./recreate_db.sh
+  - ./recreate_db
   
 #script:
 #  - bundle exec rake
@@ -21,7 +21,6 @@ rvm:
   
 gemfile:
   - Gemfile
-  - gemfiles/eventmachine-pre
   
 notifications:
   recipients:
