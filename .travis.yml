@@ -1,10 +1,12 @@
 language: ruby
 bundler_args: --without development
-env:
-  - CI=true
-
 before_script:
   - psql -c 'create database crm_test;' -U postgres
+script: 
+  - bundle exec rake
+
+env:
+  - CI=true
   
 rvm:
   - 1.9.2
