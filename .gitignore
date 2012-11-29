@@ -19,3 +19,4 @@ log/
 .yardoc
 _yardoc
 doc/
+db/schema.rb
