@@ -8,8 +8,8 @@ before_install:
 before_script:
   - bundle install
   - psql -c 'create database crm_test;' -U postgres
-  - bundle exec rake db:migrate
-  - bundle exec rake db:seed
+  - ./recreate_db.sh
+  
 script:
   - bundle exec rake
 
