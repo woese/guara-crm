@@ -2,7 +2,10 @@ language: ruby
 bundler_args: --without development
 before_script:
   - psql -c 'create database crm_test;' -U postgres
-script: 
+  - bundle exec rake db:migrate
+  - bundle exec rake db:seed
+script:
+  - gem install rake-0.9.2.2
   - bundle exec rake
 
 env:
