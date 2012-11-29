@@ -10,8 +10,8 @@ before_script:
   - psql -c 'create database crm_test;' -U postgres
   - ./recreate_db.sh
   
-script:
-  - bundle exec rake
+#script:
+#  - bundle exec rake
 
 env:
   - CI=true
