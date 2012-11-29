@@ -2,32 +2,34 @@
 ####################################
 ## Migration
 
-def build_config_from()  
+
+def build_migration_config()  
     # build schema from
-    puts_on_file Rails.root.join("tmp/from.yml") do    
-      { columns: { name: "string" },
-        format: :XLS,
-        url: File.expand_path("../../asserts/sheet1.xls", __FILE__)
+    puts_on_file Rails.root.join("tmp/migration_schema.yml") do    
+      {
+        :from => {
+           columns: { name: "string" },
+          format: :XLS,
+          url: File.expand_path("../../asserts/sheet1.xls", __FILE__)
+        },
+      
+        :to => { columns:
+            { name: "string" },
+          format: :ACTIVE_RECORD,
+          url: "District"
+        }
       }.to_yaml
     end
 
 end
 
-def build_config_to()
-    puts_on_file Rails.root.join("tmp/to.yml") do    
-      { columns:
-          { name: "string" },
-        format: :ACTIVE_RECORD,
-        url: "District"
-      }.to_yaml
-    end
-end
+
 
 
 #######################################
 ## Schemas
 
-def build_config_schemas()
+def build_migration_schemas_config()
   
   puts_on_file "tmp/file_existing.xls" do
     (1..5).map { |n| "line%d" % n }.join("\n")
@@ -35,19 +37,40 @@ def build_config_schemas()
   
   puts_on_file Rails.root.join("tmp/schemas.yml") do
     
-    { "test" => {
+    { 
+      "test" => {
         type: :CUSTOM,
-        from: "tmp/file_existing.xls",
+        from: {
+          columns: {
+            name: "string"
+          },
+          format: :XLS,
+          url: File.expand_path("../../asserts/sheet1.xls", __FILE__)
+        },
         to: "District",
         transformer: "MigrationTestDistrictTransformer" 
       },
+      
       "activities" => {
         type: :SCHEMA,
-        from: "tmp/from.yml",
-        to: "tmp/to.yml",
+        from: {
+          columns: {
+            name: "string"
+          },
+          format: :XLS,
+          url: File.expand_path("../../asserts/sheet1.xls", __FILE__)
+        },
+        to: {
+            columns: {
+              name: "string"
+            },
+            format: :ACTIVE_RECORD,
+            url: "District"
+        },
         transformer: "MigrationActivityTransformer"
       }
     }.to_yaml
+    
   end
 end
 

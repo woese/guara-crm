@@ -1,21 +1,45 @@
 
 estados:  
   :type: :SCHEMA
-  :from: db/external_migrate/estados_from.yml
-  :to: db/external_migrate/estados_to.yml
+  :from:
+    :columns:
+      :name: string
+      :name_correct: string
+    :format: :XLS
+    :url: db/external_migrate/syscad/estados.xls
+  :to:
+    :format: :ACTIVE_RECORD
+    :url: State
   :transformer: SyscadEstadosTransformer
 
 cidades:  
   :type: :SCHEMA
-  :from: db/external_migrate/cidades_from.yml
-  :to: db/external_migrate/cidades_to.yml
+  :from:
+    :columns:
+      :name: string
+      :name_correct: string
+      :state: string
+    :format: :XLS
+    :url: db/external_migrate/syscad/cidades.xls
+  :to:
+    :format: :ACTIVE_RECORD
+    :url: City
   :transformer: SyscadCidadesTransformer
 
 
 bairros:  
   :type: :SCHEMA
-  :from: db/external_migrate/bairros_from.yml
-  :to: db/external_migrate/bairros_to.yml
+  :from:
+    :columns:
+      :name: string
+      :name_correct: string
+      :city: string
+      :state: string      
+    :format: :XLS
+    :url: db/external_migrate/syscad/bairros.xls
+  :to:
+    :format: :ACTIVE_RECORD
+    :url: District
   :transformer: SyscadBairrosTransformer
 
 #cidades:

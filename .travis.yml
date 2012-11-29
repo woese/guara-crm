@@ -6,7 +6,6 @@ before_install:
   - gem --version
   
 before_script:
-  - bundle install
   - psql -c 'create database crm_test;' -U postgres
   - ./recreate_db
   

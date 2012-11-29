@@ -1,22 +1,17 @@
-
 require File.expand_path("../../spec_helper", __FILE__)
-
 require File.expand_path("../../../active_migration/active_migration", __FILE__)
-require File.expand_path("../../../active_migration/migration_schemas", __FILE__)
-
+require File.expand_path("../../../active_migration/schemas", __FILE__)
 require File.expand_path('../../support/active_migration_helper', __FILE__)
 
 
-describe ActiveMigration do
+describe ActiveMigration::Schemas::SchemasMigration do
   
   before :all do
-    build_config_from()
-    build_config_to()
-    build_config_schemas()
+    build_migration_schemas_config()
   end
   
   before do
-    @active_migration_schemas = ActiveMigration::MigrationSchemas.new("tmp/schemas.yml")
+    @active_migration_schemas = ActiveMigration::Schemas::SchemasMigration.new("tmp/schemas.yml")
   end
   
   subject { @active_migration_schemas }
@@ -25,7 +20,8 @@ describe ActiveMigration do
   
   it { @active_migration_schemas.schemas.should include "test" }
   
-  it { @active_migration_schemas.schemas["test"].should include :from => "tmp/file_existing.xls" }
+  it { @active_migration_schemas.schemas["test"].should include :from }
+  it { @active_migration_schemas.schemas["test"].should include :to }
   
   describe "migrate file schemas" do
     before do

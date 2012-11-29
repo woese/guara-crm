@@ -1,20 +1,17 @@
 
 require File.expand_path("../../spec_helper", __FILE__)
-
 require File.expand_path("../../../active_migration/active_migration", __FILE__)
-
 require File.expand_path('../../support/active_migration_helper', __FILE__)
 
 
-describe ActiveMigration do
+describe ActiveMigration::Migration do
   
   before :all do
-    build_config_from()
-    build_config_to()
+    build_migration_config()
   end
   
   before do
-    @active_migration = ActiveMigration::Migration.new("tmp/from.yml", "tmp/to.yml")    
+    @active_migration = ActiveMigration::Migration.new "tmp/migration_schema.yml"
   end
   
   subject { @active_migration }
