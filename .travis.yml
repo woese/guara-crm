@@ -1,0 +1,24 @@
+language: ruby
+bundler_args: --without development
+before_script: ./bin/ci/before_build.sh
+script: "bundle exec rake spec:ci"
+env:
+  - CI=true
+  
+rvm:
+  - 1.9.3
+  
+gemfile:
+  - Gemfile
+  - gemfiles/eventmachine-pre
+  
+notifications:
+  recipients:
+    - ti@woese.com
+    
+branches:
+  only:
+    - master
+    - 0.3.x-stable
+    - 0.2.x-stable
+    - 0.1.x-stable

@@ -35,10 +35,17 @@ gem 'activeadmin', '0.5.0'
 
 gem 'spreadsheet'
 
+group :production do
+  #gem 'pg', '0.12.2'
+end
 
 group :development do
   gem 'annotate', '~> 2.4.1.beta'
   gem 'nested_scaffold'
+  unless ENV["CI"]
+	gem 'ruby-debug19'	
+	gem 'linecache19'
+  end
 end
 
 group :development, :test do
@@ -46,8 +53,6 @@ group :development, :test do
   gem 'guard-rspec', '0.5.5'
   gem 'guard-spork', '0.3.2'
   gem 'spork', '0.9.0'
-  gem 'ruby-debug19'
-  gem 'linecache19'
   gem 'factory_girl_rails', '1.4.0'
 end
 
@@ -72,8 +77,4 @@ group :test do
   #Cucumber
   gem 'cucumber-rails', '1.2.1', :require => false
   gem 'database_cleaner', '0.7.0'
-end
-
-group :production do
-  #gem 'pg', '0.12.2'
 end
