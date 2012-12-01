@@ -1,8 +1,11 @@
 class CustomerPj < ActiveRecord::Base
   
   
-  attr_accessible :segments, :activities, :fax, :total_employes
+  attr_accessible :segments, :activities, :fax, :total_employes, :annual_revenues
   #attr_protected
+  
+  #person
+  has_one	:customer, :as => :person
   
   #segments
   has_many :customer_segments
@@ -14,9 +17,6 @@ class CustomerPj < ActiveRecord::Base
   #activities
   has_many :customer_activities
   has_many :activities, :through => :customer_activities, source: :business_activity
-  
-  #person
-  has_one	:customer, :as => :person
   
   has_many :associations, foreign_key: "from_id", class_name: "CustomerPjHasCustomersPj"
   has_many :associateds, through: :associations, source: :to

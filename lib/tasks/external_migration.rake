@@ -5,7 +5,7 @@ namespace :db do
     
     Dir[Rails.root.join("db/external_migrate/*schemas.yml")].each do |file|
       
-      @migration_schemas = ActiveMigration::MigrationSchemas.new file
+      @migration_schemas = ActiveMigration::Schemas::SchemasMigration.new file
       
       if @migration_schemas.migrate!
         Rails.logger.info "Migration success! %s" % file

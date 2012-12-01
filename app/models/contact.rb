@@ -1,5 +1,6 @@
 class Contact < ActiveRecord::Base
-  attr_accessible :birthday, :business_function, :cell, :department, :department_id, :name, :phone, :customer
+  attr_accessible :name, :birthday, :business_function, :department, :department_id,
+                  :phone, :cell, :customer, :emails
   
   #=========================== associations <--------------------------------------------
   belongs_to :customer

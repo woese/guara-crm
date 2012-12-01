@@ -78,12 +78,26 @@ module ActiveMigration
       def save_on_cache
     
         #cached path
-        path = "db/external_migrate/cache/" 
-        Dir.mkdir path if not Dir.exists? path
+        @cache_path = "db/external_migrate/cache/" 
+        Dir.mkdir path if not Dir.exists? @cache_path
     
-        puts_on_file path + "#{@domain_name}_dictionary.yml", @domain_dictionary.to_yaml
-        puts_on_file path + "#{@domain_name}.csv", @rows.map { |i| i.values.join(",")}.join("\n")
-        puts_on_file path + "#{@domain_name}_grouped.csv", @group.keys.join("\n")
+        puts_on_file @cache_path + "#{@domain_name}_dictionary.yml", @domain_dictionary.to_yaml
+        #puts_on_file @cache_path + "#{@domain_name}_raw.csv", @rows.map { |i| i.values.join(",")}.join("\n")
+        puts_on_file @cache_path + "#{@domain_name}_grouped.csv" do
+          lines = []
+          @group.each do |key, data|
+            line = []
+            data.each do |key, value|
+              if value.is_a? String
+                line << value
+              elsif value.respond_to? :name
+                line << value.name
+              end
+            end
+            lines << line.join(",")
+          end
+          lines.join("\n")
+        end
         #puts_on_file path + "#{@domain_name}.xml", @rows.to_xml
       end
     end

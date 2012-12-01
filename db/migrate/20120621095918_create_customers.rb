@@ -12,7 +12,7 @@ class CreateCustomers < ActiveRecord::Migration
       t.integer	:state_id
       t.string	:postal	  , :limit => 8
       t.string	:notes    , :limit => 500
-      t.date  	:birthday	
+      t.date  	:birthday
 		
       t.string	:phone	        , :limit => 15
       t.string	:social_link	, :limit => 200
@@ -22,11 +22,13 @@ class CreateCustomers < ActiveRecord::Migration
       #t.boolean	:type         , :default => true #legal entity or individual
       t.integer	:parent_id
       
-      t.boolean :enabled,  :default => true
+      t.boolean :enabled, :default => true
 
       t.references :person, :polymorphic => true
       
       t.boolean :complete
+      
+      t.float	:annual_revenue
 
       t.timestamps
     end

@@ -5,7 +5,8 @@ class CreateCustomerPjs < ActiveRecord::Migration
       t.integer	:total_employes	
       t.integer	:segment_id	
       t.integer	:activity_id
-
+      t.float :annual_revenues
+      
       t.timestamps
     end
   end

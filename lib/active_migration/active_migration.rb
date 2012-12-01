@@ -5,6 +5,10 @@ require 'ruby-debug'
 
 
 module ActiveMigration
+  class ActiveMigartionError < StandardError; end
+  class ActiveMigartionDataSourceError < ActiveMigartionError; end  
+  class AciteMigrationInvalidRecordError < ActiveMigartionError; end  
+  
   
   class Schema
     ##
@@ -16,8 +20,9 @@ module ActiveMigration
   end
   
   ##
-  # Transformation schema
-  # When passing to schema
+  # Module Data Transformation
+  # When passing schema file or struct, the data between datasources
+  # needs a transformations 
   module Transformer
     ##
     # called on start of migration
@@ -26,7 +31,7 @@ module ActiveMigration
     end
     
     ##
-    # called on start of migration
+    # called on start of transaction
     def begin_transaction(schema_from, schema_to)
       # nothing
     end
@@ -53,14 +58,18 @@ module ActiveMigration
   end  
   
   
-  
+  ##
+  # == Class Migration
+  # 
+  # Migrate data between  data source and transforme to destination 
+  #
   class Migration
+    attr_accessor :schema_from, :schema_to, :transformer, :name
   
+    # constructor
     def initialize(schema_url=nil)
       self.load_schema(schema_url) unless schema_url.nil?
     end
-    
-    attr_accessor :schema_from, :schema_to, :transformer
     
     ##
     # load yml schemas from and to
@@ -88,7 +97,7 @@ module ActiveMigration
     
         # TODO: Make flexible configurable and more input formats
         if @schema_from[:format].to_s.to_sym == :XLS
-          xls_migrate()
+            xls_migrate()
         end
       
         end_migration()
@@ -101,33 +110,37 @@ module ActiveMigration
     
     
     def xls_migrate
-      @xls = Spreadsheet.open @schema_from[:url]
-      # TODO: make others workbook accessible by configuration
-      sheet = @xls.worksheet 0
+      begin
+        @xls = Spreadsheet.open @schema_from[:url]
+        # TODO: make others workbook accessible by configuration
+        sheet = @xls.worksheet 0
     
-      @line = 0
+        @line = 0
     
-      # ignore head line
-      sheet.each 1 do |row|
-        @column = 0
-        row_to = { }
-        
-        #read schema columns and types
-        @schema_from[:columns].each do |schema_column, schema_type|
-          row_to.merge!(schema_column.to_sym => row[@column])
-          @column+=1
+        # ignore head line
+        sheet.each 1 do |row|
+          @column = 0
+          row_to = { }
+          
+          #read schema columns and types
+          @schema_from[:columns].each do |schema_column, schema_type|
+            row_to.merge!(schema_column.to_sym => row[@column])
+            @column+=1
+          end
+          
+          #transform row to @schema_to
+          res = true
+          res = @transformer.transform(row_to) unless @transformer.nil?
+          
+          if (res!=:ignore)
+            res = res==true && send_row_to_schema(row_to)
+            raise_migration if (res==false)
+          end
+          
+          @line+=1
         end
-      
-        #transform row to @schema_to
-        res = true
-        res = @transformer.transform(row_to) unless @transformer.nil?
-        
-        if (res!=:ignore)
-          res = res==true && send_row_to_schema(row_to)
-          raise_migration if (res==false)
-        end
-        
-        @line+=1
+      rescue Exception => e
+        raise ActiveMigartionDataSourceError.new ("Failing import excel source format from %s. %d:%d [ignored head]. " % [@schema_from[:url], @column, @line]).concat(e.message).concat("\n----"+e.backtrace.to_yaml)
       end
     end
     
@@ -143,27 +156,27 @@ module ActiveMigration
     end
     
     def raise_migration
-      raise "failing migration. Line: %d, Column: %d" % [@line, @column]
+      raise "failing migration %s.  Line: %d, Column: %d" % [@name, @line, @column]
     end
   
     def send_row_to_schema(row)
       if @schema_to[:format].to_sym == :ACTIVE_RECORD
-        
+      
         # TODO: optimize on initialize migration
         class_schema_to = eval @schema_to[:url]
-        
+      
         mdl = class_schema_to.new(row)
         res = mdl.save
-        
-        if (!res)
-          raise mdl.errors.to_s
-        end
-        
-        return res
-      end
       
-      raise "Format not valid!"
-    
+        if (!res)
+          raise AciteMigrationInvalidRecordError.new "[Schema:%s] Error on send to ACTIVE_RECORD %s. \n%s \nrow: \n%s" % [@name, @schema_to[:url], mdl.errors.to_yaml, row.to_yaml]
+        end
+      
+        return res
+      
+      else
+        raise "Not valid schema::TO format! %s" % @name  
+      end
     end
     
     ##

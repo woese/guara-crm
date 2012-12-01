@@ -4,7 +4,6 @@ class CustomerPf < ActiveRecord::Base
   attr_protected
   
   has_one	:customer	, :as => :person
-  has_many	:emails	
   belongs_to	:company	, class_name: "Customer"
   has_many	:history_pfs
   

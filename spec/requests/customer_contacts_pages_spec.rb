@@ -25,8 +25,8 @@ describe "Contacts Customer" do
     it { have_link(I18n.t('customer.contacts.link'), href: customer_contacts_path(customer)) }
     
     it "acess contacts from customers" do
-       click_link I18n.t('customers.contacts.index.link')
-       should have_selector("title", text: I18n.t("customers.contacts.title", :customer => customer.name))
+       click_link I18n.t('contacts.index.link')
+       should have_selector("title", text: I18n.t("contacts.title", :customer => customer.name))
     end
   end
   
@@ -45,7 +45,7 @@ describe "Contacts Customer" do
     describe "with invalid information" do
       let(:name) { "Contact test" }
       before do
-        fill_in I18n.t("customers.contacts.name"),     with: name
+        fill_in I18n.t("contacts.name"),     with: name
       end
       it "it should create contact" do
         expect { click_button autotitle_create('Contact') }.to change(Contact, :count).by(+1)
@@ -69,7 +69,7 @@ describe "Contacts Customer" do
       end
     end
     
-    it { should have_content I18n.t("customers.contacts.side.title") }
+    it { should have_content I18n.t("contacts.side.title") }
     
     describe "select department filter", :js => true do
       before do

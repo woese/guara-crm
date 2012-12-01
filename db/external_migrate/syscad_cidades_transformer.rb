@@ -15,14 +15,13 @@ class SyscadCidadesTransformer < ActiveMigration::Transformer::GroupedFieldFixed
   end
   
   def transform(row)
-    Rails.logger.debug "before: "+row.to_yaml
     super row
     
     #convert state entries
     row[:state] = @state_dictionary.find row[:state]
     row[:state] = State.find_by_name(row[:state])
     
-    Rails.logger.debug "after: "+row.to_yaml    
+    true
   end
   
   def end(schema_from, schema_to)

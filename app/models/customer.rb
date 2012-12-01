@@ -1,7 +1,7 @@
 class Customer < ActiveRecord::Base
   attr_accessible :doc, :doc_rg, :name, :birthday, :name_sec, :address, :state_id, :city_id, :district_id,
-                  :is_customer, :person, :postal, :emails, :complete, :state, :city, :district, 
-                  :phone, :fax, :social_link, :site, :enabled, :other_contacts, :notes, :emails_attributes
+                  :is_customer, :person, :postal, :emails, :complete, :state, :city, :district, :phone, 
+                  :fax, :social_link, :site, :enabled, :other_contacts, :notes, :emails_attributes
   #attr_protected
   
   before_validation :before_validation_completed

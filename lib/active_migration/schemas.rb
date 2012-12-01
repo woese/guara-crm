@@ -23,6 +23,22 @@ module ActiveMigration
         raise "Invalid File: should not exists!" if not File.exists?(file_schemas)
         @schemas = YAML::load(File.open(file_schemas))
       end
+      
+      def migrate!
+        @schemas.each do |key,schema|
+        
+          @migration_name = key
+          @schema = schema
+        
+          Rails.logger.info "Starting external migration: %s..." % @migration_name
+      
+          result = run_migration_job
+        
+          raise ActiveMigartionSchemasError.new("Failing Migrate Schemas: %s" % key) if not result
+        
+          Rails.logger.info "Ending: %s." % key
+        end
+      end
     
 
       def eval_class(class_str)
@@ -42,7 +58,7 @@ module ActiveMigration
         if class_found==false
           require_dependence(file_name)
           class_found = eval_class(class_str)
-          raise "Invald informed Transformer. " if class_found == false 
+          raise "[%s] Invald informed Transformer: %s.  Schema: %s" % [@migration_name, class_str, @schema.to_yaml] if class_found == false 
         end
       
         @transformer = (eval class_str).new @schema
@@ -79,23 +95,6 @@ module ActiveMigration
         files
       end
     
-    
-      def migrate!
-        @schemas.each do |key,schema|
-        
-          @migration_name = key
-          @schema = schema
-        
-          Rails.logger.info "Starting external migration: %s..." % @migration_name
-      
-          result = run_migration_job
-        
-          raise ActiveMigartionSchemasError.new("Failing Migrate Schemas: %s" % key) if not result
-        
-          Rails.logger.info "Ending: %s." % key
-        end
-      end
-    
       def run_migration_job
         transformer_from_schema
         
@@ -109,6 +108,7 @@ module ActiveMigration
     
       def migrate_schema
         migration = ActiveMigration::Migration.new
+        migration.name = @migration_name
         migration.schema_from = @schema[:from]
         migration.schema_to   = @schema[:to]
         migration.transformer = @transformer if not @transformer.nil?
@@ -124,7 +124,11 @@ module ActiveMigration
       end
     
       def transformer_from_schema
-        self.transformer_class = @schema[:transformer] if @schema.include? :transformer
+        if @schema.include? :transformer
+          self.transformer_class = @schema[:transformer]
+        else
+          @transformer = nil
+        end
       end
     
     

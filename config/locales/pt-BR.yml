@@ -86,31 +86,32 @@ pt-BR:
     inscricao_estadual: "Inscrição estadual"
     
     contact_name: "Com Contato de Nome"
+  
     
-    contacts: &attr_contacts
-      name: "Nome"
-      #business_segment: "Segmento"
-      #business_activity: "Atividade"
-      business_function: "Cargo"
-      department: "Setor"
-      phone: "Fone"
-      cell: "Celular"
-      birthday: "Aniversário"
-      side:
-        title: "Contatos"
-      edit:
-        title: "Editar Contato"
-        link: "Editar Contato"
-      new:
-        title: "Novo Contato"
-        link:  "Novo Contato"
-      index: 
-        title: "%{customer}"
-        link: "Contatos"
-      show:
-        title: "Exibindo Contato"
-      search:
-          title: "Filtro Contatos"
+  contacts: &attr_contacts
+    name: "Nome"
+    #business_segment: "Segmento"
+    #business_activity: "Atividade"
+    business_function: "Cargo"
+    department: "Setor"
+    phone: "Fone"
+    cell: "Celular"
+    birthday: "Aniversário"
+    side:
+      title: "Contatos"
+    edit:
+      title: "Editar Contato"
+      link: "Editar Contato"
+    new:
+      title: "Novo Contato"
+      link:  "Novo Contato"
+    index: 
+      title: "%{customer}"
+      link: "Contatos"
+    show:
+      title: "Exibindo Contato"
+    search:
+        title: "Filtro Contatos"
 
   searches:
       advanced: "Avançado"
