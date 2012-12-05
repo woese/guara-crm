@@ -53,8 +53,8 @@ module ActiveMigration
         #has name_correct?
         if (!row[@field_group_fixed].nil? && !row[@field_group_fixed].to_s.empty?)
           row[@field_group_fixed]               = row[@field_group_fixed].to_s.strip
-          row[@field_group]                     = row[@field_group_fixed]
           @domain_dictionary[row[@field_group]] = row[@field_group_fixed]
+          row[@field_group]                     = row[@field_group_fixed]
         end
       end
     

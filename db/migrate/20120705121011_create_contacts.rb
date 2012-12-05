@@ -2,7 +2,7 @@ class CreateContacts < ActiveRecord::Migration
   def change
     create_table :contacts do |t|
       t.references :customer
-      t.string :name, limit: 40
+      t.string :name, limit: 150
       t.integer :department_id
       t.string :business_function
       t.string :phone

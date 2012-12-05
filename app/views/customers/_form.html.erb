@@ -168,7 +168,10 @@ $(function(){
 			$('#cod_cidades').html('<option value="">-- Escolha um estado --</option>');
 		}
 	});
+	
+	$("form.customer").submit(function() {
+	  $("input.postal").val($("input.postal").val().replace(/\D/g, "")).unmask();
+	})
 });
-
 
 </script>

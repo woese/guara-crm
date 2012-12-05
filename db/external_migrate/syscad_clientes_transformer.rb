@@ -1,3 +1,5 @@
+#!/bin/env ruby
+# encoding: utf-8
 
 require "active_migration/transformer/grouped_field_fixed_spelling"
 require "active_migration/transformer/dictionary"
@@ -15,16 +17,42 @@ class SyscadClientesTransformer
     @district_dictionary = ActiveMigration::Transformer::Dictionary.new File.expand_path("../cache/bairros_dictionary.yml", __FILE__)
     @state_dictionary = ActiveMigration::Transformer::Dictionary.new File.expand_path("../cache/estados_dictionary.yml", __FILE__)
     @city_dictionary = ActiveMigration::Transformer::Dictionary.new File.expand_path("../cache/cidades_dictionary.yml", __FILE__)
+    
+    @ignore_record_error = true
   end
   
   def transform(row)
-    
-    #customer_pj
-    transform_customer_pj row
-    #
-    transform_contacts row
-    
     row[:notes] = '' if row[:notes].nil?
+    
+    transform_customer_pj row
+    transform_contacts row
+    transform_customer row
+    transform_ignore_fields row
+    
+    begin
+      create_customer row
+    rescue
+      if @ignore_record_error
+        Rails.logger.error "== Error:\n\n".concat(message_record_error())
+      end
+    end
+    :ignore
+  end
+  
+  def transform_ignore_fields(row)
+    #delete ignore
+    row.reject! { |key,value| key.to_s.start_with?("ignore") }
+  end
+  
+  def transform_customer(row)
+    row[:doc] = '' if row[:doc].nil?
+    row[:doc] = row[:doc].gsub(/[\.,\-\/\\\'\"\s;–\~\%]/, '')
+    
+    unless (((row[:doc] == "") || (row[:doc] == '0'*14)) || 
+           (Cnpj.new(row[:doc]).valido?))
+      row[:notes].concat("CNPJ Inv: %s" % row[:doc])
+      row[:doc] = ""
+    end
     
     #
     unless row[:cel_ADD_TO_NOTES].nil?
@@ -34,7 +62,7 @@ class SyscadClientesTransformer
     end
     
     unless row[:obs_ADD_TO_NOTES].nil?    
-      row[:notes].concat("\n"+row.delete(:obs_ADD_TO_NOTES)) if not row[:obs_ADD_TO_NOTES].nil?
+      row[:notes].concat("\n"+row.delete(:obs_ADD_TO_NOTES))
     else
       row.delete :obs_ADD_TO_NOTES
     end
@@ -56,20 +84,13 @@ class SyscadClientesTransformer
     
     #email
     email = row.delete :emails_email
-    row[:emails] = [{ :email => email }] unless email.nil?
-    
-    #delete ignore
-    row.delete :ignore!
-    
-    create_customer row
-    
-    :ignore
+    row[:emails] = [{:email => email}] unless email.nil?
   end
   
   def transform_contacts(row)
     row[:contacts] = []
     1..8.times do |n|
-      unless (row[("contacts_%d_name" % n).to_sym].nil?)
+      unless (row[("contacts_%d_name" % n).to_sym].nil? && row[("contacts_%d_name" % n).to_sym].nil?)
         contact = {}
         contact[:name]              = row[("contacts_%d_name" % n).to_sym]
         contact[:phone]             = row[("contacts_%d_phone" % n).to_sym]
@@ -77,10 +98,10 @@ class SyscadClientesTransformer
         contact[:business_function] = row[("contacts_%d_business_function" % n).to_sym]
         contact[:birthday]          = row[("contacts_%d_birthday" % n).to_sym]
         
-        contact[:emails]            = []
-        contact[:emails] << Email.new(email: row[("contacts_%d_email" % n).to_sym]) unless row[("contacts_%d_email" % n).to_sym].nil?
+        contact[:emails] = []
+        contact[:emails] << { email: row[("contacts_%d_email" % n).to_sym] } unless row[("contacts_%d_email" % n).to_sym].nil?
         
-        row[:contacts] << Contact.new(contact)
+        row[:contacts] << contact
       end
       
       row.delete ("contacts_%d_name" % n).to_sym   
@@ -107,7 +128,8 @@ class SyscadClientesTransformer
     
     #
     row[:customer_pj][:annual_revenues] = row.delete :annual_revenues
-    row[:notes].concat("\nClasse: "+row.delete(:class)) if row.delete(:class)
+    class_str = row.delete :class
+    row[:notes].concat("\nClasse: "+class_str) unless class_str.nil?
     row[:is_customer] = (row[:is_customer].to_i == 1)
     
     #total_employes
@@ -126,39 +148,91 @@ class SyscadClientesTransformer
     end
   end
   
+  def disduplicate!(row)
+    if (!row[:doc].nil?) && (!row[:doc].empty?) && (Customer.where(doc: row[:doc]).count>0)
+      row[:name].concat("(CNPJ Dup %d)" % Customer.where(doc: row[:doc]).count)
+      row[:notes] = '' if row[:notes].nil?
+      row[:notes].concat("\nCNPJ Duplicado: %s" % row[:doc])
+      row[:doc] = ''
+    end
+    
+    if Customer.where(name: row[:name]).count>0
+      row[:name].concat("(NOME Dup %d)" % Customer.where(name: row[:name]).count)
+      row[:notes] = "" if row[:notes].nil?
+      row[:notes].concat("\nNOME Duplicado: %s" % row[:name])
+    end
+  end
+  
   def create_customer(row)
     
-    #customer_pj = row[:customer_pj]
-    #contacts    = row[:contacts]
-    #segments    = row[:segments]
-    #activities  = row[:activities]
+    disduplicate! row
     
-    customer_pj = row.delete :customer_pj
-    contacts    = row.delete :contacts
+    Customer.transaction do
     
-    #segments    = row.delete :segments
-    #activities  = row.delete :activities
+      #customer_pj = row[:customer_pj]
+      #contacts    = row[:contacts]
+      #segments    = row[:segments]
+      #activities  = row[:activities]
     
-    @customer   = Customer.new(row)
-    @person     = CustomerPj.new(customer_pj)
-    @customer.person   = @person
+      customer_pj = row.delete :customer_pj
+      contacts    = row.delete :contacts
+      emails      = row.delete :emails
     
-    #complete valid? 
-    @customer.complete = true
-    @customer.complete = @customer.valid?
+      #segments    = row.delete :segments
+      #activities  = row.delete :activities
     
-    #@person.activities = activities   if activities.count>0
-    #@person.segments   = segments     if segments.count>0
-    #
-    @customer.contacts = contacts     if contacts.count>0
+      @customer   = Customer.new(row)
+      @person     = CustomerPj.new(customer_pj)
+      @customer.person   = @person
     
-    #still valid?
-    @customer.complete &&= @customer.valid?
+      #complete valid? 
+      @customer.complete = true
+      @customer.complete = @customer.valid?
+        
+      #still valid?
+      @customer.complete &&= @customer.valid?
     
-    unless @customer.save
-      raise StandardError.new "Error ao salvar registro. %s" % @customer.errors.to_yaml
+      unless @customer.save  
+        raise_invalid_customer
+      else
+        #@person.activities = activities   if activities.count>0
+        #@person.segments   = segments     if segments.count>0
+        #
+        contacts.each do |contact_hash|
+          emails = contact_hash.delete :emails
+        
+          contact = @customer.contacts.build contact_hash
+          raise_invalid_customer unless @customer.save
+        
+          emails.each do |email_hash|
+            contact.emails.build email_hash
+          end
+          raise_invalid_customer unless contact.save
+        end
+      
+        raise_invalid_customer unless @customer.valid?
+      end
     end
     true
+  end
+  
+  def message_record_error
+     message = ""
+
+      if @customer.errors.messages.include? :contacts
+        @customer.contacts.each do |contact|
+          unless contact.valid?
+            message += "Contato: #{contact.name} #{contact.errors.to_yaml}\n"
+          end
+        end
+      end
+
+      "Error ao salvar registro. %s\n%s" % [@customer.errors.to_yaml,
+                                                                        message]    
+  end
+  
+  def raise_invalid_customer    
+    raise StandardError.new message_record_error
   end
   
   def end(schema_from, schema_to)

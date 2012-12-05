@@ -5,12 +5,16 @@ class Contact < ActiveRecord::Base
   #=========================== associations <--------------------------------------------
   belongs_to :customer
   belongs_to :department, class_name: "BusinessDepartment"
-  has_many :emails, :as => :emailable
+  has_many :emails, :as => :emailable, dependent: :destroy
+
+  #============================ 
+  
+  accepts_nested_attributes_for :emails, :reject_if => lambda { |a| a[:email].blank? }, :allow_destroy => true
 
   #=========================== validations <--------------------------------------------
-  validates :name, :presence => true, length: { maximum: 60 }
+  validates :name, :presence => true, length: { maximum: 150 }
   validates :customer_id, :presence => true
-  validates_uniqueness_of :name, :scope => :customer_id
+  validates_uniqueness_of :name, :scope => [:customer_id, :business_function]
 
   #=========================== search <--------------------------------------------  
   

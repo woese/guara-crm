@@ -1,7 +1,10 @@
+#encoding: utf-8
+
 class Customer < ActiveRecord::Base
   attr_accessible :doc, :doc_rg, :name, :birthday, :name_sec, :address, :state_id, :city_id, :district_id,
                   :is_customer, :person, :postal, :emails, :complete, :state, :city, :district, :phone, 
-                  :fax, :social_link, :site, :enabled, :other_contacts, :notes, :emails_attributes
+                  :fax, :social_link, :site, :enabled, :other_contacts, :notes, :emails_attributes,
+                  :external_key
   #attr_protected
   
   before_validation :before_validation_completed
@@ -29,12 +32,12 @@ class Customer < ActiveRecord::Base
   #=========================== VALIDATE <------------------------------------------------
   
   
-  VALID_NAME_REGEX = /\A([A-z0-9\s.,;\'\"\-\/])+\z/i
+  VALID_NAME_REGEX = /\A([[[:alpha:]]0-9.,;\s\'\"\-–\/&\*\(\)`´%!])+\z/i
   
   validates :doc, :customer_cnpj => true
   validates :doc, :presence => true, :uniqueness => true, :if => :doc_needs?
-  validates :name, :presence => true, length: { maximum: 60 }, format: { with: VALID_NAME_REGEX }, uniqueness: true
-  validates :address, :presence => true, :if => :complete?
+  validates :name, :presence => true, length: { maximum: 120 }, format: { with: VALID_NAME_REGEX }, uniqueness: true
+  validates :address, :presence => true, length: { maximum: 150 }, :if => :complete?
   validates :state_id, :presence => true, :if => :complete?
   validates :city_id, :presence => true, :if => :complete?
   validates :district_id, :presence => true, :if => :complete?

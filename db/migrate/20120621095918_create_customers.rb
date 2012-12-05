@@ -1,20 +1,20 @@
 class CreateCustomers < ActiveRecord::Migration
   def change
     create_table :customers do |t|
-      t.string	:name	, :limit => 60, :null => false
+      t.string	:name	, :limit => 120, :null => false
       t.string	:doc	, :limit => 14
       t.string	:doc_rg	, :limit => 22
 		
-      t.string	:name_sec	, :limit => 40 #
-      t.string	:address	, :limit => 80
+      t.string	:name_sec	, :limit => 120 #
+      t.string	:address	, :limit => 150
       t.integer	:district_id
       t.integer	:city_id
       t.integer	:state_id
       t.string	:postal	  , :limit => 8
-      t.string	:notes    , :limit => 500
+      t.text  	:notes
       t.date  	:birthday
-		
-      t.string	:phone	        , :limit => 15
+		  
+      t.string	:phone	        , :limit => 35
       t.string	:social_link	, :limit => 200
       t.string	:site	        , :limit => 200
       t.boolean	:is_customer	, :default => false
@@ -23,13 +23,13 @@ class CreateCustomers < ActiveRecord::Migration
       t.integer	:parent_id
       
       t.boolean :enabled, :default => true
-
+      
       t.references :person, :polymorphic => true
       
-      t.boolean :complete
-      
+      t.boolean :complete      
       t.float	:annual_revenue
-
+      t.integer :external_key
+      
       t.timestamps
     end
   end

@@ -140,7 +140,9 @@ module ActiveMigration
           @line+=1
         end
       rescue Exception => e
-        raise ActiveMigartionDataSourceError.new ("Failing import excel source format from %s. %d:%d [ignored head]. " % [@schema_from[:url], @column, @line]).concat(e.message).concat("\n----"+e.backtrace.to_yaml)
+        line = @line.nil? ? 0 : @line
+        column = @column.nil? ? 0 : @column
+        raise ActiveMigartionDataSourceError.new ("Failing import excel source format from %s. %d:%d [ignored head]. " % [@schema_from[:url], column, line]).concat(e.message).concat("\n----"+e.backtrace.to_yaml)
       end
     end
     

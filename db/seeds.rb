@@ -76,7 +76,7 @@ begin
 
 
   ### City
-  City.create( name: 'Fortaleza', state: State.find_by_acronym('CE') )
+  City.create( name: 'FORTALEZA', state: State.find_by_acronym('CE') )
 
   #segmento
   BusinessSegment.create(name:'Segmento Padrão')
@@ -89,6 +89,9 @@ begin
                       { name: "Administração" },
                       { name: "RH" }
                     ])
+  
+  
+  
 rescue Exception => exception
   logger =  Logger.new(STDOUT)
   logger.error("Error running task db:seed - #{exception.message} #{exception.class} #{exception.record.to_yaml}\n#{exception.record.errors.to_yaml}\n\n")
