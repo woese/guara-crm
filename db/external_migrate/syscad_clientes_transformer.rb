@@ -4,7 +4,7 @@
 require "active_migration/transformer/grouped_field_fixed_spelling"
 require "active_migration/transformer/dictionary"
 
-class SyscadClientesTransformer
+class SyscadClientesTransformer < SyscadCommonTransformer
   
   include ActiveMigration::Transformer
   include ApplicationHelper
@@ -37,11 +37,6 @@ class SyscadClientesTransformer
       end
     end
     :ignore
-  end
-  
-  def transform_ignore_fields(row)
-    #delete ignore
-    row.reject! { |key,value| key.to_s.start_with?("ignore") }
   end
   
   def transform_customer(row)

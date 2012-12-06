@@ -10,8 +10,8 @@
 #
 
 class User < ActiveRecord::Base
-  
   include ActiveDisablable
+  
   #attr_readonly :admin
   attr_accessible :name, :email, :password, :password_confirmation, :admin, :remember_me, :users_has_groups, 
                   :primary_group, :secundary_groups, :primary_company_business, :primary_company_business_id,
