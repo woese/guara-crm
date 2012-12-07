@@ -32,7 +32,7 @@ class Customer < ActiveRecord::Base
   #=========================== VALIDATE <------------------------------------------------
   
   
-  VALID_NAME_REGEX = /\A([[[:alpha:]]0-9.,;\s\'\"\-–\/&\*\(\)`´%!])+\z/i
+  VALID_NAME_REGEX = /\A([[[:alpha:]]0-9.,;\s\'\"\-–\/&\*\(\)`´%!\+])+\z/i
   
   validates :doc, :customer_cnpj => true
   validates :doc, :presence => true, :uniqueness => true, :if => :doc_needs?

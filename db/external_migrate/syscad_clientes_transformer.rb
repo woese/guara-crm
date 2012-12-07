@@ -4,7 +4,7 @@
 require "active_migration/transformer/grouped_field_fixed_spelling"
 require "active_migration/transformer/dictionary"
 
-class SyscadClientesTransformer < SyscadCommonTransformer
+class SyscadClientesTransformer
   
   include ActiveMigration::Transformer
   include ApplicationHelper
@@ -40,13 +40,11 @@ class SyscadClientesTransformer < SyscadCommonTransformer
   end
   
   def transform_customer(row)
-    row[:doc] = '' if row[:doc].nil?
-    row[:doc] = row[:doc].gsub(/[\.,\-\/\\\'\"\s;–\~\%]/, '')
+    valida_cnpj
     
-    unless (((row[:doc] == "") || (row[:doc] == '0'*14)) || 
-           (Cnpj.new(row[:doc]).valido?))
-      row[:notes].concat("CNPJ Inv: %s" % row[:doc])
-      row[:doc] = ""
+    #name is empty?
+    if (row[:name].nil? || row[:name].empty?) && ((!row[:name_sec].nil?) && (!row[:name_sec].empty?))
+      row[:name] = row[:name_sec]
     end
     
     #
@@ -80,6 +78,18 @@ class SyscadClientesTransformer < SyscadCommonTransformer
     #email
     email = row.delete :emails_email
     row[:emails] = [{:email => email}] unless email.nil?
+  end
+  
+  def valid_cnpj(row)
+    row[:doc] = '' if row[:doc].nil?
+    row[:doc] = row[:doc].gsub(/[\.,\-\/\\\'\"\s;–\~\%]/, '')
+    
+    if (((row[:doc] != "") &&
+         (row[:doc] != '0'*14)) &&
+        (!Cnpj.new(row[:doc]).valido?))
+      row[:notes].concat("CNPJ Inv: %s" % row[:doc])
+      row[:doc] = ""
+    end
   end
   
   def transform_contacts(row)

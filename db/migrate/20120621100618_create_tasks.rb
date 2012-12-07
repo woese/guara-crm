@@ -1,13 +1,13 @@
 class CreateTasks < ActiveRecord::Migration
   def change
-    create_table :tasks do |t|
-      t.string     :name, limit: 60
+    create_table   :tasks do |t|
+      t.string     :name, limit: 150
       t.references :interested, :polymorphic => true
       t.references :contact, :polymorphic => true
-      t.datetime :due_time
-      t.datetime :finish_time
-      t.string	:notes, :limit => 140
-      t.string :description, :limit => 1000
+      t.datetime   :due_time
+      t.datetime   :finish_time
+      t.text	     :notes
+      t.string     :description, :limit => 1000
       
       t.integer	:user_id
       t.integer	:status_id

@@ -1,7 +1,6 @@
 
 require "spreadsheet"
 require 'active_support'
-require 'ruby-debug'
 
 
 module ActiveMigration
@@ -53,6 +52,17 @@ module ActiveMigration
     # called on ending transaction
     def end_transaction(schema_from, schema_to)
       # nothing
+    end
+    
+    ##
+    #
+    def after_row_saved(row, object)
+      #
+    end
+    
+    def transform_ignore_fields(row)
+      #delete ignore
+      row.reject! { |key,value| key.to_s.start_with?("ignore") }
     end
     
   end  
@@ -135,6 +145,8 @@ module ActiveMigration
           if (res!=:ignore)
             res = res==true && send_row_to_schema(row_to)
             raise_migration if (res==false)
+            
+            @transformer.after_row_saved(row_to, @last_object) unless @transformer.nil?
           end
           
           @line+=1
@@ -167,11 +179,11 @@ module ActiveMigration
         # TODO: optimize on initialize migration
         class_schema_to = eval @schema_to[:url]
       
-        mdl = class_schema_to.new(row)
-        res = mdl.save
+        @last_object = class_schema_to.new(row)
+        res = @last_object.save
       
         if (!res)
-          raise AciteMigrationInvalidRecordError.new "[Schema:%s] Error on send to ACTIVE_RECORD %s. \n%s \nrow: \n%s" % [@name, @schema_to[:url], mdl.errors.to_yaml, row.to_yaml]
+          raise AciteMigrationInvalidRecordError.new "[Schema:%s] Error on send to ACTIVE_RECORD %s. \n%s \nrow: \n%s" % [@name, @schema_to[:url], @last_object.errors.to_yaml, row.to_yaml]
         end
       
         return res
