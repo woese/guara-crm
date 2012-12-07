@@ -40,7 +40,7 @@ class SyscadClientesTransformer
   end
   
   def transform_customer(row)
-    valida_cnpj
+    valida_cnpj row
     
     #name is empty?
     if (row[:name].nil? || row[:name].empty?) && ((!row[:name_sec].nil?) && (!row[:name_sec].empty?))
