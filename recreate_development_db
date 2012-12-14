@@ -1,0 +1,10 @@
+mv spec ~spec~
+rake db:drop
+rake db:create
+rake db:migrate
+rake db:test:prepare
+mv ~spec~ spec
+
+rake db:seed
+rake db:seed RAILS_ENV=test
+rake db:populate

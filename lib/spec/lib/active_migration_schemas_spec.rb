@@ -1,6 +1,6 @@
 require File.expand_path("../../spec_helper", __FILE__)
-require File.expand_path("../../../active_migration/active_migration", __FILE__)
-require File.expand_path("../../../active_migration/schemas", __FILE__)
+require File.expand_path("../../../active_migration", __FILE__)
+require File.expand_path("../../../schemas", __FILE__)
 require File.expand_path('../../support/active_migration_helper', __FILE__)
 
 

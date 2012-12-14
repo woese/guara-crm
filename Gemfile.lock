@@ -243,6 +243,7 @@ GEM
       linecache19 (>= 0.5.11)
       ruby-debug-base19 (>= 0.11.19)
     ruby-ole (1.2.11.5)
+    ruby-rtf (0.0.1)
     ruby_core_source (0.1.5)
       archive-tar-minitar (>= 0.5.2)
     rubyzip (0.9.9)
@@ -314,6 +315,7 @@ DEPENDENCIES
   rb-fsevent (= 0.9.1)
   rspec-rails (= 2.11.0)
   ruby-debug19
+  ruby-rtf (= 0.0.1)
   sass-rails (= 3.2.4)
   spork (= 0.9.0)
   spreadsheet

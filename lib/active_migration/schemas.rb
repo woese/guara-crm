@@ -25,18 +25,20 @@ module ActiveMigration
       end
       
       def migrate!
-        @schemas.each do |key,schema|
-        
-          @migration_name = key
-          @schema = schema
-        
-          Rails.logger.info "Starting external migration: %s..." % @migration_name
-      
-          result = run_migration_job
-        
-          raise ActiveMigartionSchemasError.new("Failing Migrate Schemas: %s" % key) if not result
-        
-          Rails.logger.info "Ending: %s." % key
+        ActiveRecord::Base.transaction do   
+          @schemas.each do |key,schema|
+            
+            @migration_name = key
+            @schema = schema
+            
+            Rails.logger.info "Starting external migration: %s..." % @migration_name
+            
+            result = run_migration_job
+            
+            raise ActiveMigartionSchemasError.new("Failing Migrate Schemas: %s" % key) if not result
+            
+            Rails.logger.info "Ending: %s." % key
+          end
         end
       end
     

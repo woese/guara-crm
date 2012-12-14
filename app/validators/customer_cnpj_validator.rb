@@ -4,7 +4,7 @@ class CustomerCnpjValidator < ActiveModel::EachValidator
     if (record.person_type==CustomerPj.to_s)
       
       #cnpj
-      unless (!record.complete? && ((value == "") || (value == '0'*14))) || 
+      unless (!record.complete? && ((value == "") || (value == '0'*14) || (Cnpj.new(value).valido?))) || 
              (Cnpj.new(value).valido?)
         record.errors[attribute] << (options[:message] || ("%s %s" % [I18n.t("customer_pjs.doc"), I18n.t('errors.messages.invalid')]) )
       end

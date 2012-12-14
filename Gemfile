@@ -33,7 +33,9 @@ gem 'jquery-rails'
 
 gem 'activeadmin', '0.5.0'
 
+#converters
 gem 'spreadsheet'
+gem 'ruby-rtf', '0.0.1'
 
 group :production do
   #gem 'pg', '0.12.2'

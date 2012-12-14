@@ -1,7 +1,6 @@
 
-require "spreadsheet"
+require 'spreadsheet'
 require 'active_support'
-
 
 module ActiveMigration
   class ActiveMigartionError < StandardError; end

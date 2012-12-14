@@ -63,13 +63,18 @@ module ActiveMigration
         save_on_db
       end
     
+      def schema_to_class
+        eval @schema_to[:url]
+      end
+    
       def save_on_db
     
-        class_to = eval @schema_to[:url]
+        class_to = schema_to_class
     
         @group.each do |key, row|
           if not class_to.send(("find_by_%s" % @field_group).to_sym, row[@field_group])
-            record = class_to.new(name: row[@field_group])
+            record = class_to.new(row)
+            puts "SaveOnDB: "+row.to_yaml
             record.save!
           end
         end

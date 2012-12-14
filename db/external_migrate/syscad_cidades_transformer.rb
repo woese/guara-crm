@@ -1,6 +1,6 @@
 
 require "active_migration/transformer/grouped_field_fixed_spelling"
-require "active_migration/transformer/dictionary"
+require "active_migration/dictionary"
 
 class SyscadCidadesTransformer < ActiveMigration::Transformer::GroupedFieldFixedSpelling
   
@@ -15,13 +15,14 @@ class SyscadCidadesTransformer < ActiveMigration::Transformer::GroupedFieldFixed
   end
   
   def transform(row)
-    super row
+    res = super row
     
     #convert state entries
     row[:state] = @state_dictionary.find row[:state]
-    row[:state] = State.find_by_name(row[:state])
+    row[:state] = State.find_by_acronym(row[:state])
     
-    true
+    #grouping and after save
+    res
   end
   
   def end(schema_from, schema_to)

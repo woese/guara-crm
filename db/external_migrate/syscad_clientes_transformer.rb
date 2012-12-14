@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 require "active_migration/transformer/grouped_field_fixed_spelling"
-require "active_migration/transformer/dictionary"
+require "active_migration/dictionary"
 
 class SyscadClientesTransformer
   
@@ -40,7 +40,7 @@ class SyscadClientesTransformer
   end
   
   def transform_customer(row)
-    valida_cnpj row
+    validate_cnpj row
     
     #name is empty?
     if (row[:name].nil? || row[:name].empty?) && ((!row[:name_sec].nil?) && (!row[:name_sec].empty?))
@@ -61,26 +61,22 @@ class SyscadClientesTransformer
     end
     
     #convert state entries
-    state = row.delete :state_name
-    state = @state_dictionary.find state
-    state = State.find_by_acronym(state)
+    row[:state]     = State.find_by_acronym(@state_dictionary.find(row.delete(:state_name)))
     
-    #convert state entries
-    w = {}
-    city = row.delete :city_name
-    city = @city_dictionary.find city
-    city = City.where(name: city, state_id: nil_or_id(state)).first
+    #convert city entries
+    city = @city_dictionary.find(row.delete(:city_name))
+    row[:city]      = City.where(name: city, state_id: nil_or_id(row[:state])).first
     
-    #district
-    district = @district_dictionary.find row.delete(:district_name)
-    row[:district] = District.where(name: district, city_id: nil_or_id(city)).first
+    #convert district entries
+    district        = @district_dictionary.find(row.delete(:district_name))
+    row[:district]  = District.where(name: district, city_id: nil_or_id(row[:city])).first
     
     #email
     email = row.delete :emails_email
     row[:emails] = [{:email => email}] unless email.nil?
   end
   
-  def valid_cnpj(row)
+  def validate_cnpj(row)
     row[:doc] = '' if row[:doc].nil?
     row[:doc] = row[:doc].gsub(/[\.,\-\/\\\'\"\s;–\~\%]/, '')
     

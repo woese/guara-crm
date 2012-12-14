@@ -75,7 +75,7 @@ pt-BR:
     city_id: "Cidade"
     state_id: "Estado"
     district_id: "Bairro"
-
+    doc: "CNPJ/CPF:"
 
     enabled: "Ativo?"    
     postal: "Cep"
@@ -140,7 +140,7 @@ pt-BR:
     name: "Assunto"
     due_time: "Prazo"
     contact: "Contato"
-    type: "Atividade:"
+    type: "Serviço/Atividade:"
     notes: "Notas"
     description: "Descrição"
     assigned: "Atribuído para"
