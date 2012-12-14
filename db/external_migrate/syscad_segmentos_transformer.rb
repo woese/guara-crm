@@ -10,7 +10,7 @@ class SyscadSegmentosTransformer
   def initialize(schema)
     super schema
     
-    @domain_name = "atividades"
+    @domain_name = "segmentos"
     @segmentos_dictionary = {}
   end
   

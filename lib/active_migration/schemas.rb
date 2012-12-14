@@ -31,13 +31,17 @@ module ActiveMigration
             @migration_name = key
             @schema = schema
             
-            Rails.logger.info "Starting external migration: %s..." % @migration_name
+            msg = "Starting external migration: %s..." % @migration_name
+            Rails.logger.info msg
+            puts msg
             
             result = run_migration_job
             
             raise ActiveMigartionSchemasError.new("Failing Migrate Schemas: %s" % key) if not result
             
-            Rails.logger.info "Ending: %s." % key
+            msg = "Ending: %s." % key
+            Rails.logger.info msg
+            puts msg
           end
         end
       end

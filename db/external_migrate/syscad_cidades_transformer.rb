@@ -11,7 +11,7 @@ class SyscadCidadesTransformer < ActiveMigration::Transformer::GroupedFieldFixed
     super schema
     
     @domain_name = "cidades"
-    @state_dictionary = ActiveMigration::Transformer::Dictionary.new File.expand_path("../cache/estados_dictionary.yml", __FILE__)
+    @state_dictionary = ActiveMigration::Dictionary.new File.expand_path("../cache/estados_dictionary.yml", __FILE__)
   end
   
   def transform(row)

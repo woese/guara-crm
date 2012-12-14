@@ -62,12 +62,25 @@ atividades:
       :id: integer
       :name: string
       :business_segment: integer
+      :notes: string
     :format: :XLS
     :url: db/external_migrate/syscad/atividades.xls
   :to:
     :format: :ACTIVE_RECORD
     :url: BusinessActivity
   :transformer: SyscadAtividadesTransformer
+
+emails_rules:
+  :type: :SCHEMA
+  :from:
+    :columns:
+      :before: integer
+      :after: string
+    :format: :XLS
+    :url: db/external_migrate/syscad/emails.xls
+  :to:
+    :nothing: !ignore
+  :transformer: SyscadEmailsTransformer
 
 clientes:
   :type: :SCHEMA
@@ -162,7 +175,7 @@ clientes_atividades:
     :url: CustomerActivity
   :transformer: SyscadClientesAtividadesTransformer
   
-servicos:  
+servicos:
   :type: :SCHEMA
   :from:
     :columns:

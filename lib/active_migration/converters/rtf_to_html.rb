@@ -117,6 +117,7 @@ module ActiveMigration
         end
 
         str
+      end
     end
   end
 end

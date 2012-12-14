@@ -11,15 +11,15 @@ class SyscadHistoricosTransformer
     
     @domain_name = "historico"
     
-    @servicos_dictionary = ActiveMigration::Transformer::Dictionary.new File.expand_path("../cache/servicos_dictionary.yml", __FILE__)
-    @consultores_dictionary = ActiveMigration::Transformer::Dictionary.new File.expand_path("../cache/consultores_dictionary.yml", __FILE__)
+    @servicos_dictionary = ActiveMigration::Dictionary.new File.expand_path("../cache/servicos_dictionary.yml", __FILE__)
+    @consultores_dictionary = ActiveMigration::Dictionary.new File.expand_path("../cache/consultores_dictionary.yml", __FILE__)
     
     @user_default = User.first
   end
   
   
   def transform(row)
-    row[:type_id]       = @servicos_dictionary.find(row[:type_id])
+    row[:type_id]       = @servicos_dictionary.find(row[:type_id].to_i.to_s)
     row[:type]          = TaskType.find_by_id(row[:type_id])
     row[:name] = "Syscad: "+(row[:type].nil? || row[:type].name).to_s
     

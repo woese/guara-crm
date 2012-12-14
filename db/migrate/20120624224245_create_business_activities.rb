@@ -4,6 +4,7 @@ class CreateBusinessActivities < ActiveRecord::Migration
       t.string :name, :limit => 100
       t.boolean :enabled,  :default => true
       t.references :business_segment
+      t.string :notes, :limit => 500
       t.timestamps
     end
     

@@ -3,6 +3,7 @@
 
 require "active_migration/transformer/grouped_field_fixed_spelling"
 require "active_migration/dictionary"
+require "active_migration/spelling_fix"
 
 class SyscadClientesTransformer
   
@@ -14,9 +15,11 @@ class SyscadClientesTransformer
     
     @domain_name = "clientes"
     
-    @district_dictionary = ActiveMigration::Transformer::Dictionary.new File.expand_path("../cache/bairros_dictionary.yml", __FILE__)
-    @state_dictionary = ActiveMigration::Transformer::Dictionary.new File.expand_path("../cache/estados_dictionary.yml", __FILE__)
-    @city_dictionary = ActiveMigration::Transformer::Dictionary.new File.expand_path("../cache/cidades_dictionary.yml", __FILE__)
+    @district_dictionary = ActiveMigration::Dictionary.new File.expand_path("../cache/bairros_dictionary.yml", __FILE__)
+    @state_dictionary = ActiveMigration::Dictionary.new File.expand_path("../cache/estados_dictionary.yml", __FILE__)
+    @city_dictionary = ActiveMigration::Dictionary.new File.expand_path("../cache/cidades_dictionary.yml", __FILE__)
+    
+    @emails_fixer = ActiveMigration::SpellingFix.new File.expand_path("../cache/emails_rules.yml", __FILE__)
     
     @ignore_record_error = true
   end
@@ -61,7 +64,7 @@ class SyscadClientesTransformer
     end
     
     #convert state entries
-    row[:state]     = State.find_by_acronym(@state_dictionary.find(row.delete(:state_name)))
+    row[:state]     = State.find_by_acronym(@state_dictionary.find(row.delete(:state_name).to_s))
     
     #convert city entries
     city = @city_dictionary.find(row.delete(:city_name))
@@ -72,7 +75,7 @@ class SyscadClientesTransformer
     row[:district]  = District.where(name: district, city_id: nil_or_id(row[:city])).first
     
     #email
-    email = row.delete :emails_email
+    email = @emails_fixer.fix!(row.delete :emails_email)
     row[:emails] = [{:email => email}] unless email.nil?
   end
   
@@ -84,6 +87,9 @@ class SyscadClientesTransformer
          (row[:doc] != '0'*14)) &&
         (!Cnpj.new(row[:doc]).valido?))
       row[:notes].concat("CNPJ Inv: %s" % row[:doc])
+      
+      row[:name] = row[:name].to_s.concat("(CNPJ Inv)" % row[:doc])
+      
       row[:doc] = ""
     end
   end
@@ -100,7 +106,7 @@ class SyscadClientesTransformer
         contact[:birthday]          = row[("contacts_%d_birthday" % n).to_sym]
         
         contact[:emails] = []
-        contact[:emails] << { email: row[("contacts_%d_email" % n).to_sym] } unless row[("contacts_%d_email" % n).to_sym].nil?
+        contact[:emails] << { email: @emails_fixer.fix!(row[("contacts_%d_email" % n).to_sym]) } unless row[("contacts_%d_email" % n).to_sym].nil?
         
         row[:contacts] << contact
       end
@@ -130,7 +136,7 @@ class SyscadClientesTransformer
     #
     row[:customer_pj][:annual_revenues] = row.delete :annual_revenues
     class_str = row.delete :class
-    row[:notes].concat("\nClasse: "+class_str) unless class_str.nil?
+    row[:notes].concat("Classe: "+class_str+"\n") unless class_str.nil?
     row[:is_customer] = (row[:is_customer].to_i == 1)
     
     #total_employes

@@ -11,8 +11,8 @@ class SyscadBairrosTransformer < ActiveMigration::Transformer::GroupedFieldFixed
     super schema
     
     @domain_name = "bairros"
-    @state_dictionary = ActiveMigration::Transformer::Dictionary.new File.expand_path("../cache/estados_dictionary.yml", __FILE__)
-    @city_dictionary = ActiveMigration::Transformer::Dictionary.new File.expand_path("../cache/cidades_dictionary.yml", __FILE__)
+    @state_dictionary = ActiveMigration::Dictionary.new File.expand_path("../cache/estados_dictionary.yml", __FILE__)
+    @city_dictionary = ActiveMigration::Dictionary.new File.expand_path("../cache/cidades_dictionary.yml", __FILE__)
   end
 
   def transform(row)
@@ -27,7 +27,7 @@ class SyscadBairrosTransformer < ActiveMigration::Transformer::GroupedFieldFixed
     row.delete :state
     
     #convert state entries
-    row[:city] = @city_dictionary.find row[:city]
+    row[:city] = @city_dictionary.find row[:city].to_i.to_s
     row[:city] = City.where(name: row[:city]).first
     
     if row[:city].nil? and (!row[:city].nil? && !row[:city].empty?)

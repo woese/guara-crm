@@ -11,7 +11,7 @@ class SyscadClientesAtividadesTransformer
     super schema
     
     @domain_name = "clientes_atividades"
-    @atividades_dictionary = ActiveMigration::Transformer::Dictionary.new File.expand_path("../cache/atividades_dictionary.yml", __FILE__)
+    @atividades_dictionary = ActiveMigration::Dictionary.new File.expand_path("../cache/atividades_dictionary.yml", __FILE__)
   end
   
   def transform(row)    
@@ -20,9 +20,11 @@ class SyscadClientesAtividadesTransformer
     return :ignore if customer.nil?
     
     row[:customer_pj] = customer.person
-    row[:activity_id] = @atividades_dictionary.find(row[:activity_id])
+    row[:activity]    = BusinessActivity.find_by_id(@atividades_dictionary.find(row[:activity_id].to_i.to_s).to_i)
+    
+    puts row.to_yaml
 
-    unless BusinessAcitivity.find_by_id row[:activity_id]
+    unless BusinessActivity.find_by_id row[:activity_id]
       Rails.logger.debug "Não é uma atividade válida! %s" % row[:activity_id].to_s
       return :ignore
     end
