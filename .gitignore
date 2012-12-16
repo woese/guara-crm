@@ -20,3 +20,4 @@ log/
 _yardoc
 doc/
 db/schema.rb
+db/external_migrate/
