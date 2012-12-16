@@ -1,13 +1,10 @@
-<p/>
-<div class="alert alert-block">
-	        <a class="close">×</a>
-	        <h4 class="alert-heading">Item desabilitado</h4>
-	        <p>No momento este recurso está desabilitado</p>
-</div>
-
 <% if @feed_items.any? %>
   <ol class="microposts">
     <%= render partial: 'shared/feed_item', collection: @feed_items %>
   </ol>
   <%= will_paginate @feed_items %>
+<% else %>
+<div class="alert alert-block">
+	        <h4 class="alert-heading"><%= t("feeds.no_messages") %></h4>
+</div>
 <% end %>

@@ -14,4 +14,10 @@ module CustomersHelper
     nil
   end
   
+  def index_notes(notes)
+    if notes.to_s.size>140
+      notes[0..139].concat("...")
+    end
+  end
+  
 end

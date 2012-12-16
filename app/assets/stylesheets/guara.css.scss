@@ -4,8 +4,17 @@
 $rowHeight: 24px;
 
 body .modal {
-    width: 880px;
-	margin: -250px 0 0 -440px;
+  width: 880px;
+	margin: -298px 0 0 -440px;
+	form {
+		margin: 0;
+	}
+	
+	.actions {
+    bottom: 15px;
+    left: 10px;
+    position: absolute;
+	}
 }
 
 .divisor {

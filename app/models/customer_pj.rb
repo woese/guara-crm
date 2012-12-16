@@ -16,7 +16,7 @@ class CustomerPj < ActiveRecord::Base
   
   #activities
   has_many :customer_activities
-  has_many :activities, :through => :customer_activities, source: :business_activity
+  has_many :activities, :through => :customer_activities, source: :activity
   
   has_many :associations, foreign_key: "from_id", class_name: "CustomerPjHasCustomersPj"
   has_many :associateds, through: :associations, source: :to

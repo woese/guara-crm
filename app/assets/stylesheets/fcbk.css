@@ -83,7 +83,7 @@ display: block;
 width: 7px;
 height: 7px;
 font-size: 1px;
-background: url('images/close.gif');
+background: url('/assets/close.gif');
 }
 ul.holder li.bit-box a.closebutton:hover {
 background-position: 7px;

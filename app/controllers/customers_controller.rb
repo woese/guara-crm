@@ -11,13 +11,13 @@ class CustomersController < ApplicationController
     @sels = params["sels"] || []
     @search = Customer.search(params[:search])
     #@customers = Customer.search_by_name(@customers, params[:name]).paginate(page: params[:page], :per_page => 5)
-    @customers = @search.paginate(page: params[:page], :per_page => 5)
+    @customers = @search.paginate(page: params[:page], :per_page => 10)
     params[:search] = {} if params[:search].nil?
   end
   
   def show
     @task = @customer.tasks.build
-    @tasks = @customer.tasks.paginate(page:params[:task_page] || 1, per_page: 3)
+    @tasks = @customer.tasks.paginate(page:params[:task_page] || 1, per_page: 4)
     
     @selected_department = params[:department]
     @contacts = @customer.contacts

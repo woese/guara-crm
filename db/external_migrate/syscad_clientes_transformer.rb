@@ -43,12 +43,12 @@ class SyscadClientesTransformer
   end
   
   def transform_customer(row)
-    validate_cnpj row
-    
     #name is empty?
     if (row[:name].nil? || row[:name].empty?) && ((!row[:name_sec].nil?) && (!row[:name_sec].empty?))
       row[:name] = row[:name_sec]
     end
+    
+    validate_cnpj row
     
     #
     unless row[:cel_ADD_TO_NOTES].nil?

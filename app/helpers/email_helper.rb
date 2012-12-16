@@ -2,7 +2,7 @@
 module EmailHelper
   
   def concat_emails(emails)
-    emails.join(", ") unless emails.nil?
+    emails.map {|e| e.email }.join(", ") unless emails.nil?
   end
   
 end

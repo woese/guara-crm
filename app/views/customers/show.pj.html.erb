@@ -11,104 +11,105 @@
 			
 			  <div class="row">
 				<div class="span4">
-
-				  <dl class="dl-horizontal">
-					
-		            <dt><%=  t('customers.cnpj') %></dt>
+				  <dl class="dl-horizontal">					
+            <dt><%=  t('customers.cnpj') %></dt>
 				    <dd><%= @customer.doc %></dd>
-		          </dl>
+          </dl>
 
 				  <dl class="dl-horizontal">
-		            <dt><%=  t("customer_#{@customer.person.prefix}s.doc_rg") %></dt>
-		            <dd><%= nbsp @customer.doc_rg %></dd>	
-		          </dl>
-
+            <dt><%=  t("customer_#{@customer.person.prefix}s.doc_rg") %></dt>
+            <dd><%= nbsp @customer.doc_rg %></dd>	
+          </dl>
+ 
 				  <dl class="dl-horizontal">
-		            <dt><%=  t("customer.notes") %></dt>
-					<dd>
-			        	<%= nbsp @customer.notes %>
-					</dd>
-		          </dl>
-
-  
-				  <dl class="dl-horizontal">
-		            <dt><%=  t("customers.social_link") %></dt>
-			        <dd><%= nbsp @customer.social_link %></dd>
-		          </dl>
-
-
-				  <dl class="dl-horizontal">
-		            <dt><%=  t("customers.address") %></dt>
-					<dd>
-			          <%= nbsp @customer.format_address %>
-					</dd>
-		          </dl>
-
-				  <dl class="dl-horizontal">
-		            <dt><%=  t("customer_pjs.total_employes") %></dt>
-		            <dd>
-			          <%= nbsp @customer.person.total_employes %>
-		            </dd>
-		          </dl>
-   
+            <dt><%=  t("customers.social_link") %></dt>
+		        <dd><%= nbsp @customer.social_link %></dd>
+          </dl>
+		
 					<dl class="dl-horizontal">
-			            <dt><%=  t("customer_pjs.segments") %></dt>
-			            <dd>
-				          <%= nbsp inline_list @customer.person.segments, :name %>
-			            </dd>
-			        </dl>
-
-					<dl class="dl-horizontal">
-			            <dt><%=  t("customer_pjs.activities") %></dt>
-			            <dd>
-				          <%= nbsp inline_list @customer.person.activities, :name %>
-			            </dd>
-			        </dl>
-			
-					<dl class="dl-horizontal">
-			            <dt><%=  t("customer_pjs.associateds") %></dt>
-			            <dd>
-						  <ul>
-				          <% @customer.person.associateds.each do |pj_assoc| %>
-							<li><%= link_to pj_assoc.name.upcase, customer_path(pj_assoc.customer), :target => '_blank' %></li>
-						 <% end %>
-						
-				          <% @customer.person.associates.each do |pj_assoc| %>
-							<li><%= link_to pj_assoc.name.upcase, customer_path(pj_assoc.customer), :target => '_blank' %></li>
-						 <% end %>
-						  </ul>
-						
-			            </dd>
-			        </dl>
-
+            <dt><%=  t("customers.emails") %></dt>
+	          <dd>
+		        <%= nbsp inline_list @customer.emails, :email %>
+	          </dd>
+	        </dl>
 				</div>
+				
 				<div class="span2 column2">
 					<dl>
-			            <dt><%=  t("customers.complete") %></dt>
-				        <dd><span class="badge <%= @customer.complete? ? "badge-success" : "badge-important" %>"><%= format_boolean @customer.complete %></span></dd>
-			        </dl>
+            <dt><%=  t("customers.complete") %></dt>
+		        <dd><span class="badge <%= @customer.complete? ? "badge-success" : "badge-important" %>"><%= format_boolean @customer.complete %></span></dd>
+	        </dl>
 	
-			
 					<dl>
-		            	<dt><%=  t("customers.phone") %></dt>
-			            <dd>
-				          <%= nbsp @customer.phone %>
-			            </dd>
-			        </dl>
-
-					<dl>
-		            	<dt><%=  t("customers.emails") %></dt>
-			            <dd>
-				          <%= nbsp inline_list @customer.emails, :email %>
-			            </dd>
-			        </dl>
-
-					<dl>
+           	<dt><%=  t("customers.phone") %></dt>
+            <dd>
+	          <%= nbsp @customer.phone %>
+            </dd>
+	        </dl>
+				</div>
+				
+				<div class="span6">
+					<dl class="dl-horizontal">
 			            <dt><%=  t("customer.site") %></dt>
 			            <dd>
 				          <%= nbsp @customer.site %>
 			            </dd>
 			        </dl>
+					
+					<dl class="dl-horizontal">
+			            <dt><%=  t("customers.address") %></dt>
+						<dd>
+				          <%= nbsp @customer.format_address %>
+						</dd>
+			          </dl>
+
+					  <dl class="dl-horizontal" id="notes">
+			            <dt><%=  t("customer.notes") %></dt>
+						<dd>
+							<div id="complete">
+								<%= simple_format(@customer.notes) %>
+							</div>
+		        	<%= nbsp simple_format(index_notes(@customer.notes)) %>
+							
+						</dd>
+			          </dl>
+
+					  <dl class="dl-horizontal">
+			            <dt><%=  t("customer_pjs.total_employes") %></dt>
+			            <dd>
+				          <%= nbsp @customer.person.total_employes %>
+			            </dd>
+			          </dl>
+
+						<dl class="dl-horizontal">
+				            <dt><%=  t("customer_pjs.segments") %></dt>
+				            <dd>
+					          <%= nbsp inline_list @customer.person.segments, :name %>
+				            </dd>
+				        </dl>
+
+						<dl class="dl-horizontal">
+				            <dt><%=  t("customer_pjs.activities") %></dt>
+				            <dd>
+					          <%= nbsp inline_list @customer.person.activities, :name %>
+				            </dd>
+				        </dl>
+
+						<dl class="dl-horizontal">
+				            <dt><%=  t("customer_pjs.associateds") %></dt>
+				            <dd>
+							  <ul>
+					          <% @customer.person.associateds.each do |pj_assoc| %>
+								<li><%= link_to pj_assoc.name.upcase, customer_path(pj_assoc.customer), :target => '_blank' %></li>
+							 <% end %>
+
+					          <% @customer.person.associates.each do |pj_assoc| %>
+								<li><%= link_to pj_assoc.name.upcase, customer_path(pj_assoc.customer), :target => '_blank' %></li>
+							 <% end %>
+							  </ul>
+
+				            </dd>
+				        </dl>	
 				</div>
 				
 				  
@@ -170,9 +171,30 @@ $(function(){
 			$('#cod_cidades').html('<option value="">[Escolha um estado]</option>');
 		}
 	});
+	
+	
+	$('#notes').mouseenter(function(){
+		$('#notes #complete').fadeIn();
+	}).mouseleave(function(){
+		$('#notes #complete').fadeOut();		
+	})
 });
 
-
 </script>
+
+<style>
+
+#notes #complete {
+	background: #ffffff;
+	border: 1px solid #f1f1f1;
+	padding: 5px;
+	position: absolute;
+	float: left;
+	width: 380px;
+	height: 300px;
+	overflow: scroll;
+	display: none;
+}
+</style>
 
 </section>

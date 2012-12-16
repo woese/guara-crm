@@ -1,22 +1,25 @@
 <% if signed_in? %>
   <div class="row">
-    <aside class="span5">
-      <section>
-        <%= render 'shared/user_info' %>
-      </section>
-	  <section>
+    <aside class="span3">
+      <section class="row well">
+				<div class="user_info">
+        	<%= render 'shared/user_info' %>
+				</div>
+				<div class="user_info">
+			  	<%= render 'shared/notifies' %>	
+				</div>
+			</section>
+    </aside>
+	  <div class="span5">
       	<h3><%= t("activities.title") %></h3>
       	<%= render 'shared/calendar' %>
-	  </section>
-    </aside>
-	<span class="span4">
-		<h3><%= t("home.feed") %></h3>
-	    <%= render 'shared/feed' %>
-	</span>
+	  </div>
+		<div class="span4">
+			<h3><%= t("home.feed") %></h3>
+		    <%= render 'shared/feed' %>
+		</div>
 	
-	<span class="span3">
-	    <%= render 'shared/notifies' %>	
-	</span>
+
   </div>  
 <% else %>
   <div class="center hero-unit">
