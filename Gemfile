@@ -1,26 +1,32 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.5'
+
+#modules
+gem 'guara_store', :path => "../guara_store/"
+
 gem 'pg', '0.12.2'
 
-gem "meta_search"
-
-gem 'will_paginate', '3.0.3'
-
-# Bootstrap and layouting
+# view
+gem 'jquery-rails'
 gem 'bootstrap-sass', '~> 2.1.1.0'
 gem 'bootstrap-will_paginate', '0.0.6'
 
 # Forms
-gem 'rails3-jquery-autocomplete'
+gem 'will_paginate', '3.0.3'
 gem 'formtastic-bootstrap'
+gem 'rails3-jquery-autocomplete'
 
 #test support
 gem 'faker', '1.0.1'
 
 #login rules
 gem 'devise'
-gem 'cancan'
+gem 'cancan', '~> 1.6.8'
+
+#model
+gem "meta_search"
+gem 'activeadmin', '0.5.0'
 
 #criptar
 gem 'bcrypt-ruby', '3.0.1'
@@ -28,10 +34,6 @@ gem 'bcrypt-ruby', '3.0.1'
 #BR
 gem 'brazilian-rails'
 gem 'rails-i18n'
-
-gem 'jquery-rails'
-
-gem 'activeadmin', '0.5.0'
 
 #converters
 gem 'spreadsheet'

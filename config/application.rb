@@ -10,7 +10,7 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
-module GUARACRM
+module Guara
   class Application < Rails::Application
     
     Dir[Rails.root.join("config/guara/*.rb")].each {|f| require f}

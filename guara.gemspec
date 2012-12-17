@@ -18,7 +18,9 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- test/*`.split("\n")
   s.require_paths = ["lib"]
 
-  s.add_dependency("formtastic-bootstrap", "~> 0.0.1")
+  s.add_dependency("formtastic", "~> 2.2.1")
+  s.add_dependency("formtastic-bootstrap", "~> 2.0.0")
+
   s.add_dependency("will_paginate", "~> 3.0.3")
   s.add_dependency("devise", "~> 2.1.2")
   s.add_dependency("cancan", "~> 1.6.8")

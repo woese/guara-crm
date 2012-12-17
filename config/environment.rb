@@ -2,7 +2,7 @@
 require File.expand_path('../application', __FILE__)
 
 # Initialize the rails application
-GUARACRM::Application.initialize!
+Guara::Application.initialize!
 
 
 module ActiveSupport

@@ -1,4 +1,6 @@
-GUARACRM::Application.routes.draw do  
+Guara::Application.routes.draw do  
+
+  mount GuaraStore::Engine => "/store"
 
   ActiveAdmin.routes(self)
 

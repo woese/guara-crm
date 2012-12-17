@@ -45,11 +45,11 @@ module MenuHelper
   end
   
   def build_menu_maintence()
-    build_menu(GUARACRM::Menus::MAINTENCE)
+    build_menu(Guara::Menus::MAINTENCE)
   end
   
   def build_menu_admin()
-    build_menu(GUARACRM::Menus::ADMINISTRATION)
+    build_menu(Guara::Menus::ADMINISTRATION)
   end
   
 end

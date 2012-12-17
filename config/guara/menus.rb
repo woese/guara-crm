@@ -1,5 +1,5 @@
 
-module GUARACRM
+module Guara
   module Menus
     groups = [:customers, :maintence, :help, :current_user]
 
@@ -7,9 +7,9 @@ module GUARACRM
     ADMINISTRATION =
             {
               :title => "administration",
-              :namespace => "admin",
+              :namespace => "main_app.admin",
               :items => [
-                          [:users, "users_path()"],
+                          [:users, "main_app.users_path()"],
                           :user_groups,
                         ]
              }
@@ -17,7 +17,7 @@ module GUARACRM
     MAINTENCE =
             {
               :title => "maintenances",
-              :namespace => "maintence",
+              :namespace => "main_app.maintence",
               :items => [
                           :districts,
                           :cities,
